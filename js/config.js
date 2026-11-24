@@ -28,9 +28,10 @@ const APP_CONFIG = {
   // --------------------------------------------------------------------------
   music: {
     autoplay: true,
-    // Musik tema: Corporate Motivational & Uplifting Instrumental (Elegan & Inspiratif)
-    src: "audio/corporate-motivational.mp3",
-    fallbackSrc: "https://archive.org/download/jamendo-638441/01-2326347-Megis-Corporate%20Motivational%20Music%202.mp3",
+    // Sumber utama: CDN archive.org (direct link, stabil, CORS terbuka, berfungsi di GitHub Pages)
+    src: "https://ia801908.us.archive.org/31/items/jamendo-638441/01-2326347-Megis-Corporate%20Motivational%20Music%202.mp3",
+    // Fallback: file lokal untuk pengembangan / offline
+    fallbackSrc: "audio/corporate-motivational.mp3",
   },
 
   // --------------------------------------------------------------------------

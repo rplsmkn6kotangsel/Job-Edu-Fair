@@ -610,10 +610,11 @@
   </div>
 
   <!-- Audio Element (Musik Latar Bertema Inspiratif & Formal Edu Fair & Career Expo 2026) -->
-  <audio id="bgMusic" loop preload="auto">
-    <source src="audio/corporate-motivational.mp3" type="audio/mp3">
-    <source src="https://archive.org/download/jamendo-638441/01-2326347-Megis-Corporate%20Motivational%20Music%202.mp3"
-      type="audio/mp3">
+  <audio id="bgMusic" loop preload="auto" playsinline>
+    <!-- Sumber utama: CDN langsung tanpa redirect, CORS terbuka, stabil untuk GitHub Pages -->
+    <source src="https://ia801908.us.archive.org/31/items/jamendo-638441/01-2326347-Megis-Corporate%20Motivational%20Music%202.mp3" type="audio/mpeg">
+    <!-- Fallback lokal (untuk development / offline) -->
+    <source src="audio/corporate-motivational.mp3" type="audio/mpeg">
   </audio>
 
 

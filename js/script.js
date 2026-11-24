@@ -213,20 +213,19 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Pastikan sumber audio menggunakan konfigurasi tema jika disetel
   if (bgMusic && typeof APP_CONFIG !== "undefined" && APP_CONFIG.music && APP_CONFIG.music.src) {
-    if (!bgMusic.currentSrc || bgMusic.currentSrc === "") {
-      bgMusic.src = APP_CONFIG.music.src;
-    }
-    // Fallback jika sumber lokal bermasalah
+    // Set sumber utama dari config (CDN, bukan lokal) agar berfungsi di GitHub Pages
+    bgMusic.src = APP_CONFIG.music.src;
+    bgMusic.load();
+
+    // Fallback ke sumber alternatif jika gagal
     bgMusic.addEventListener("error", () => {
       if (APP_CONFIG.music.fallbackSrc && bgMusic.src !== APP_CONFIG.music.fallbackSrc) {
-        console.warn("Audio utama gagal dimuat, beralih ke fallback URL:", APP_CONFIG.music.fallbackSrc);
+        console.warn("Audio utama gagal, beralih ke fallback:", APP_CONFIG.music.fallbackSrc);
         bgMusic.src = APP_CONFIG.music.fallbackSrc;
         bgMusic.load();
-        if (isPlaying) {
-          bgMusic.play().catch(() => {});
-        }
+        if (isPlaying) bgMusic.play().catch(() => {});
       }
-    });
+    }, true);
   }
 
   function playMusic() {
