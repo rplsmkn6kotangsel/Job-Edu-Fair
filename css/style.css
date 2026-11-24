@@ -1,0 +1,39 @@
+/* ==========================================================================
+   STYLE CSS — EDU FAIR & CAREER EXPO 2026
+   SMKN 6 Tangerang Selatan
+   Tema: Luxury Dark & Gold Aesthetic (#0B0B0B & #C8A65A)
+   ========================================================================== */
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0B0B0B;
+}
+::-webkit-scrollbar-thumb {
+  background: #2F2F2F;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C8A65A;
+}
+
+/* Spinning Music Disc Animation */
+.spinning {
+  animation: spinDisc 4s linear infinite;
+}
+
+@keyframes spinDisc {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Transisi Halus */
+.transition-smooth {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}

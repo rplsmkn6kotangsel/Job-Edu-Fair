@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — Edu Fair &amp; Career Expo 2026 | SMKN 6 Tangsel</title>
+  <meta name="description" content="Dashboard Pengelolaan Tamu Undangan &amp; RSVP Edu Fair &amp; Career Expo 2026 SMKN 6 Tangerang Selatan.">
+
+  <!-- Google Fonts: Playfair Display & Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+
+  <!-- Iconify CDN -->
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gold: '#C8A65A',
+            dark: '#0B0B0B',
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            sans: ['"Montserrat"', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Style -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="bg-[#0B0B0B] text-white font-sans antialiased selection:bg-[#C8A65A] selection:text-[#0B0B0B] min-h-screen">
+
+  <!-- ========================================================================
+       PANITIA AUTHENTICATION GATE (GERBANG LOGIN KHUSUS PANITIA)
+       ======================================================================== -->
+  <div id="authGate" class="min-h-screen flex items-center justify-center px-4 py-12 relative z-50">
+    <div class="max-w-md w-full bg-[#0B0B0B] border border-[#2F2F2F] hover:border-[#C8A65A]/40 transition-colors p-8 sm:p-10 rounded-sm shadow-2xl relative">
+      
+      <!-- Top Decorative Accent -->
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-[2px] bg-gradient-to-r from-transparent via-[#C8A65A] to-transparent"></div>
+
+      <!-- Header & Icon -->
+      <div class="text-center mb-8">
+        <div class="w-14 h-14 mx-auto mb-4 border border-[#C8A65A]/40 bg-[#C8A65A]/5 rounded-sm flex items-center justify-center text-[#C8A65A]">
+          <iconify-icon icon="ph:shield-check-bold" class="text-2xl"></iconify-icon>
+        </div>
+        <span class="text-[#C8A65A] text-[10px] uppercase tracking-[0.25em] font-semibold block mb-1">
+          Panel Panitia &bull; Akses Terbatas
+        </span>
+        <h1 class="font-serif text-2xl sm:text-3xl font-semibold text-white tracking-tight">
+          Verifikasi Panitia
+        </h1>
+        <p class="text-xs text-white/50 font-light mt-2 leading-relaxed">
+          Masukkan kata sandi / PIN khusus panitia pelaksana Edu Fair &amp; Career Expo 2026 untuk melanjutkan.
+        </p>
+      </div>
+
+      <!-- Login Form -->
+      <form id="authForm" class="space-y-5" onsubmit="return false;">
+        
+        <!-- Input Passcode / PIN -->
+        <div>
+          <label for="adminPasscode" class="block text-[11px] uppercase tracking-wider text-white/70 font-medium mb-1.5 flex justify-between">
+            <span>Kata Sandi / PIN Panitia:</span>
+            <span class="text-[10px] text-white/40 lowercase">default: panitia2026</span>
+          </label>
+          <div class="relative">
+            <iconify-icon icon="ph:lock-key-bold" class="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40 text-base"></iconify-icon>
+            <input 
+              type="password" 
+              id="adminPasscode" 
+              autocomplete="current-password"
+              placeholder="Masukkan kode akses panitia..."
+              class="w-full bg-[#141414] border border-[#2F2F2F] focus:border-[#C8A65A] text-white text-xs pl-10 pr-11 py-3 rounded-sm outline-none transition-colors"
+              required
+            >
+            <button 
+              type="button" 
+              id="btnTogglePassword" 
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white text-base transition-colors p-1"
+              title="Lihat / Sembunyikan Kata Sandi"
+              aria-label="Lihat kata sandi"
+            >
+              <iconify-icon id="eyeIcon" icon="ph:eye-slash-bold"></iconify-icon>
+            </button>
+          </div>
+        </div>
+
+        <!-- Remember Me Checkbox -->
+        <div class="flex items-center justify-between text-xs">
+          <label class="flex items-center gap-2 cursor-pointer text-white/60 hover:text-white/80 select-none">
+            <input type="checkbox" id="rememberMe" class="accent-[#C8A65A] w-3.5 h-3.5 rounded-sm">
+            <span>Ingat di perangkat ini</span>
+          </label>
+          <span class="text-[11px] text-[#C8A65A]/80 font-mono">SMKN 6 Tangsel</span>
+        </div>
+
+        <!-- Error Message Alert -->
+        <div id="authErrorBox" class="hidden p-3 border border-red-500/40 bg-red-500/10 text-red-400 text-xs rounded-sm flex items-start gap-2">
+          <iconify-icon icon="ph:warning-circle-fill" class="text-base shrink-0 mt-0.5"></iconify-icon>
+          <span id="authErrorMsg">Kata sandi panitia salah. Silakan coba lagi.</span>
+        </div>
+
+        <!-- Submit Button -->
+        <button 
+          type="submit" 
+          id="btnSubmitAuth"
+          class="w-full py-3 bg-[#C8A65A] text-[#0B0B0B] text-xs font-semibold uppercase tracking-[0.2em] rounded-sm hover:bg-[#b89548] active:scale-[0.99] transition-all flex items-center justify-center gap-2 shadow-lg"
+        >
+          <iconify-icon icon="ph:sign-in-bold" class="text-sm"></iconify-icon>
+          <span>Masuk ke Dashboard</span>
+        </button>
+
+      </form>
+
+      <!-- Back Link -->
+      <div class="mt-8 pt-6 border-t border-[#1A1A1A] text-center">
+        <a href="index.html" class="inline-flex items-center gap-1.5 text-xs text-white/40 hover:text-[#C8A65A] transition-colors">
+          <iconify-icon icon="ph:arrow-left-bold"></iconify-icon>
+          <span>Kembali ke Halaman Undangan</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ========================================================================
+       AUTHENTICATED DASHBOARD APPLICATION WRAPPER
+       (Hanya tampil setelah verifikasi panitia berhasil)
+       ======================================================================== -->
+  <div id="adminApp" class="hidden">
+
+    <!-- ========================================================================
+         TOP NAVBAR
+         ======================================================================== -->
+    <header class="sticky top-0 z-40 backdrop-blur-xl bg-[#0B0B0B]/90 border-b border-[#1A1A1A]">
+      <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        
+        <!-- Brand & Title -->
+        <div class="flex items-center gap-4">
+          <a href="index.html" class="font-serif text-xl sm:text-2xl tracking-[0.2em] text-[#C8A65A] font-semibold flex items-center gap-2">
+            <span>ST. SMKN 6 TANGSEL</span>
+          </a>
+          <span class="hidden sm:inline-block w-[1px] h-6 bg-[#2F2F2F]"></span>
+          <span class="hidden sm:inline-block text-xs uppercase tracking-[0.2em] text-white/50 font-medium">
+            Admin Dashboard
+          </span>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <button id="btnRefresh" class="inline-flex items-center gap-2 px-3 sm:px-4 py-2 border border-[#2F2F2F] hover:border-[#C8A65A] text-white/80 hover:text-white text-xs uppercase tracking-wider rounded-sm transition-all" title="Segarkan Data">
+            <iconify-icon icon="ph:arrows-clockwise-bold" id="refreshIcon" class="text-sm text-[#C8A65A]"></iconify-icon>
+            <span class="hidden md:inline">Refresh Data</span>
+          </button>
+
+          <a href="index.html" target="_blank" class="inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-[#C8A65A] text-[#0B0B0B] text-xs uppercase tracking-wider font-semibold rounded-sm hover:bg-[#b89548] transition-all">
+            <iconify-icon icon="ph:arrow-square-out-bold" class="text-sm"></iconify-icon>
+            <span class="hidden md:inline">Buka Undangan</span>
+          </a>
+
+          <!-- Tombol Keluar / Logout -->
+          <button id="btnLogout" class="inline-flex items-center gap-1.5 px-3 py-2 border border-red-500/30 hover:border-red-500/60 bg-red-500/5 hover:bg-red-500/10 text-red-400 hover:text-red-300 text-xs uppercase tracking-wider rounded-sm transition-all" title="Keluar dari Panel Panitia">
+            <iconify-icon icon="ph:sign-out-bold" class="text-sm"></iconify-icon>
+            <span class="hidden sm:inline">Keluar</span>
+          </button>
+        </div>
+
+      </div>
+    </header>
+
+
+  <!-- ========================================================================
+       MAIN DASHBOARD CONTAINER
+       ======================================================================== -->
+  <main class="max-w-7xl mx-auto px-6 py-10">
+
+    <!-- PAGE HEADER -->
+    <div class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-[#1A1A1A]">
+      <div>
+        <span class="text-[#C8A65A] text-xs uppercase tracking-[0.25em] font-medium block mb-2">Panel Pengelolaan</span>
+        <h1 class="font-serif text-3xl sm:text-4xl font-semibold text-white tracking-tight">
+          Data Tamu &amp; Konfirmasi RSVP
+        </h1>
+        <p class="text-xs sm:text-sm text-white/60 font-light mt-1">
+          Edu Fair &amp; Career Expo 2026 &bull; SMKN 6 Tangerang Selatan
+        </p>
+      </div>
+
+      <!-- Live Sync Indicator -->
+      <div class="flex items-center gap-3 text-xs text-white/60">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span id="syncStatus">Tersambung ke Database</span>
+      </div>
+    </div>
+
+
+    <!-- ======================================================================
+         STATISTICS CARDS (4 METRICS)
+         ====================================================================== -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-10">
+      
+      <!-- Card 1: Total Tamu Terdata -->
+      <div class="bg-[#0B0B0B] border border-[#2F2F2F] p-6 rounded-sm hover:border-[#C8A65A]/60 transition-all">
+        <div class="flex justify-between items-start mb-3">
+          <span class="text-[11px] uppercase tracking-wider text-white/50 font-medium">Total Tamu Undangan</span>
+          <iconify-icon icon="ph:users-three-fill" class="text-[#C8A65A] text-xl"></iconify-icon>
+        </div>
+        <div id="statTotalGuests" class="font-serif text-3xl sm:text-4xl font-bold text-white mb-1">34</div>
+        <span class="text-[10px] text-white/40 tracking-wider uppercase">Dari tamuedufair.csv</span>
+      </div>
+
+      <!-- Card 2: Total Konfirmasi RSVP -->
+      <div class="bg-[#0B0B0B] border border-[#2F2F2F] p-6 rounded-sm hover:border-[#C8A65A]/60 transition-all">
+        <div class="flex justify-between items-start mb-3">
+          <span class="text-[11px] uppercase tracking-wider text-white/50 font-medium">Respon Masuk (RSVP)</span>
+          <iconify-icon icon="ph:chats-circle-fill" class="text-[#C8A65A] text-xl"></iconify-icon>
+        </div>
+        <div id="statTotalRsvps" class="font-serif text-3xl sm:text-4xl font-bold text-[#C8A65A] mb-1">0</div>
+        <span class="text-[10px] text-white/40 tracking-wider uppercase">Konfirmasi &amp; Ucapan</span>
+      </div>
+
+      <!-- Card 3: Jumlah Konfirmasi Hadir -->
+      <div class="bg-[#0B0B0B] border border-emerald-500/30 p-6 rounded-sm bg-emerald-500/[0.03]">
+        <div class="flex justify-between items-start mb-3">
+          <span class="text-[11px] uppercase tracking-wider text-emerald-400 font-medium">Akan Hadir</span>
+          <iconify-icon icon="ph:check-circle-fill" class="text-emerald-400 text-xl"></iconify-icon>
+        </div>
+        <div id="statAttending" class="font-serif text-3xl sm:text-4xl font-bold text-emerald-400 mb-1">0</div>
+        <span class="text-[10px] text-emerald-400/60 tracking-wider uppercase">Tamu Terkonfirmasi</span>
+      </div>
+
+      <!-- Card 4: Berhalangan / Ragu -->
+      <div class="bg-[#0B0B0B] border border-[#2F2F2F] p-6 rounded-sm hover:border-[#C8A65A]/60 transition-all">
+        <div class="flex justify-between items-start mb-3">
+          <span class="text-[11px] uppercase tracking-wider text-white/50 font-medium">Tidak Hadir / Ragu</span>
+          <iconify-icon icon="ph:x-circle-fill" class="text-white/40 text-xl"></iconify-icon>
+        </div>
+        <div id="statNotAttending" class="font-serif text-3xl sm:text-4xl font-bold text-white/70 mb-1">0</div>
+        <span class="text-[10px] text-white/40 tracking-wider uppercase">Berhalangan Hadir</span>
+      </div>
+
+    </div>
+
+
+    <!-- ======================================================================
+         TAB NAVIGATION (TAMU UNDANGAN VS DATA RSVP)
+         ====================================================================== -->
+    <div class="flex items-center gap-2 border-b border-[#2F2F2F] mb-8">
+      <button id="tabBtnGuests" class="tab-btn px-6 py-3.5 text-xs uppercase tracking-[0.2em] font-semibold border-b-2 border-[#C8A65A] text-[#C8A65A] flex items-center gap-2 transition-all">
+        <iconify-icon icon="ph:address-book-fill" class="text-base"></iconify-icon>
+        <span>Data Tamu Undangan (<span id="tabCountGuests">34</span>)</span>
+      </button>
+
+      <button id="tabBtnRsvps" class="tab-btn px-6 py-3.5 text-xs uppercase tracking-[0.2em] font-semibold border-b-2 border-transparent text-white/50 hover:text-white flex items-center gap-2 transition-all">
+        <iconify-icon icon="ph:envelope-open-fill" class="text-base"></iconify-icon>
+        <span>Buku Tamu &amp; RSVP (<span id="tabCountRsvps">0</span>)</span>
+      </button>
+    </div>
+
+
+    <!-- ======================================================================
+         TAB CONTENT 1: DAFTAR TAMU UNDANGAN (GUESTS)
+         ====================================================================== -->
+    <section id="tabContentGuests" class="space-y-6">
+
+      <!-- Controls & Filter Toolbar -->
+      <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 bg-[#0B0B0B] border border-[#2F2F2F] p-4 rounded-sm">
+        
+        <!-- Search Input -->
+        <div class="relative flex-1">
+          <iconify-icon icon="ph:magnifying-glass-bold" class="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40 text-sm"></iconify-icon>
+          <input 
+            type="text" 
+            id="searchGuests" 
+            placeholder="Cari nama tamu, instansi, atau kode (contoh: TM02, UHAMKA, Cakra)..."
+            class="w-full bg-[#0B0B0B] border border-[#2F2F2F] focus:border-[#C8A65A] text-white text-xs pl-10 pr-4 py-2.5 rounded-sm outline-none transition-colors"
+          >
+        </div>
+
+        <!-- Category Dropdown Filter -->
+        <div class="flex items-center gap-3">
+          <select 
+            id="filterCategory" 
+            class="bg-[#0B0B0B] border border-[#2F2F2F] focus:border-[#C8A65A] text-white text-xs px-3.5 py-2.5 rounded-sm outline-none transition-colors"
+          >
+            <option value="ALL">Semua Kategori</option>
+            <option value="Universitas">Universitas</option>
+            <option value="Tamu">Tamu Instansi / Pengawas</option>
+            <option value="Industri">Industri / Perusahaan</option>
+            <option value="Sponshorsip">Sponsorship</option>
+            <option value="Alumni">Alumni</option>
+          </select>
+
+          <!-- Quick Link Generator Modal Trigger -->
+          <button id="btnOpenLinkGen" class="px-4 py-2.5 bg-[#C8A65A]/10 border border-[#C8A65A]/40 text-[#C8A65A] hover:bg-[#C8A65A] hover:text-[#0B0B0B] text-xs font-semibold uppercase tracking-wider rounded-sm transition-all whitespace-nowrap flex items-center gap-1.5">
+            <iconify-icon icon="ph:link-bold"></iconify-icon>
+            <span>Buat Link Custom</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Guests Table Container -->
+      <div class="border border-[#2F2F2F] rounded-sm overflow-hidden bg-[#0B0B0B] shadow-2xl">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="border-b border-[#2F2F2F] bg-[#141414] text-white/60 uppercase tracking-[0.15em] text-[10px]">
+                <th class="py-3.5 px-4 font-semibold w-16 text-center">Kode</th>
+                <th class="py-3.5 px-4 font-semibold">Nama Tamu &amp; Instansi</th>
+                <th class="py-3.5 px-4 font-semibold w-28">Kategori</th>
+                <th class="py-3.5 px-4 font-semibold w-48">No. WhatsApp</th>
+                <th class="py-3.5 px-4 font-semibold w-64 text-center">Aksi Undangan Resmi</th>
+              </tr>
+            </thead>
+            <tbody id="guestsTableBody" class="divide-y divide-[#1A1A1A] font-light">
+              <!-- Rendered via JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Table Footer Note -->
+      <p class="text-[11px] text-white/40 tracking-wide font-light">
+        *Klik tombol <strong class="text-emerald-400">Kirim WA</strong> untuk mengirim pesan undangan resmi &amp; formal via WhatsApp. Jika nomor belum ada, klik <strong class="text-[#C8A65A]">+ Tambah WA</strong> untuk menyimpannya ke database Supabase dan mengirim langsung.
+      </p>
+
+    </section>
+
+
+    <!-- ======================================================================
+         TAB CONTENT 2: DATA BUKU TAMU & RSVP (RSVPS)
+         ====================================================================== -->
+    <section id="tabContentRsvps" class="space-y-6 hidden">
+
+      <!-- Controls & Filter Toolbar -->
+      <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 bg-[#0B0B0B] border border-[#2F2F2F] p-4 rounded-sm">
+        
+        <!-- Search Input -->
+        <div class="relative flex-1">
+          <iconify-icon icon="ph:magnifying-glass-bold" class="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40 text-sm"></iconify-icon>
+          <input 
+            type="text" 
+            id="searchRsvps" 
+            placeholder="Cari respon tamu atau isi pesan/ucapan..."
+            class="w-full bg-[#0B0B0B] border border-[#2F2F2F] focus:border-[#C8A65A] text-white text-xs pl-10 pr-4 py-2.5 rounded-sm outline-none transition-colors"
+          >
+        </div>
+
+        <!-- Status Filter & Export Button -->
+        <div class="flex items-center gap-3">
+          <select 
+            id="filterRsvpStatus" 
+            class="bg-[#0B0B0B] border border-[#2F2F2F] focus:border-[#C8A65A] text-white text-xs px-3.5 py-2.5 rounded-sm outline-none transition-colors"
+          >
+            <option value="ALL">Semua Status</option>
+            <option value="Hadir">Akan Hadir</option>
+            <option value="Tidak Hadir">Tidak Hadir</option>
+            <option value="Masih Ragu">Masih Ragu</option>
+          </select>
+
+          <!-- Export CSV -->
+          <button id="btnExportRsvps" class="px-4 py-2.5 border border-[#C8A65A] text-[#C8A65A] hover:bg-[#C8A65A] hover:text-[#0B0B0B] text-xs font-semibold uppercase tracking-wider rounded-sm transition-all whitespace-nowrap flex items-center gap-1.5">
+            <iconify-icon icon="ph:download-simple-bold"></iconify-icon>
+            <span>Ekspor CSV</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- RSVPs Table Container -->
+      <div class="border border-[#2F2F2F] rounded-sm overflow-hidden bg-[#0B0B0B] shadow-2xl">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="border-b border-[#2F2F2F] bg-[#141414] text-white/60 uppercase tracking-[0.15em] text-[10px]">
+                <th class="py-3.5 px-4 font-semibold w-32">Waktu Respon</th>
+                <th class="py-3.5 px-4 font-semibold w-48">Nama Tamu / Instansi</th>
+                <th class="py-3.5 px-4 font-semibold w-28 text-center">Status</th>
+                <th class="py-3.5 px-4 font-semibold w-28">Rombongan</th>
+                <th class="py-3.5 px-4 font-semibold">Pesan &amp; Harapan</th>
+              </tr>
+            </thead>
+            <tbody id="rsvpsTableBody" class="divide-y divide-[#1A1A1A] font-light">
+              <!-- Rendered via JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- ========================================================================
+       MODAL: GENERATOR TAUTAN KHUSUS (CUSTOM LINK GENERATOR)
+       ======================================================================== -->
+  <div id="linkGenModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="bg-[#0B0B0B] border border-[#C8A65A] rounded-sm max-w-md w-full p-6 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-4 border-b border-[#2F2F2F] mb-4">
+        <h3 class="font-serif text-lg font-semibold text-[#C8A65A]">Buat Tautan Undangan Kustom</h3>
+        <button id="btnCloseLinkGen" class="text-white/60 hover:text-white text-xl">
+          <iconify-icon icon="ph:x-bold"></iconify-icon>
+        </button>
+      </div>
+
+      <p class="text-xs text-white/60 font-light mb-4">
+        Ketikkan nama tamu atau instansi di luar daftar untuk menghasilkan tautan personal yang siap dibagikan:
+      </p>
+
+      <div class="space-y-4">
+        <div>
+          <label for="customGuestInput" class="block text-[11px] uppercase tracking-wider text-[#C8A65A] font-semibold mb-1">
+            Nama Tamu / Pejabat:
+          </label>
+          <input 
+            type="text" 
+            id="customGuestInput" 
+            placeholder="Contoh: Bapak Ir. Bambang Soedibyo, M.M."
+            class="w-full bg-[#0B0B0B] border border-[#2F2F2F] focus:border-[#C8A65A] text-white text-xs px-3.5 py-2.5 rounded-sm outline-none"
+          >
+        </div>
+
+        <div>
+          <label class="block text-[11px] uppercase tracking-wider text-white/50 mb-1">
+            Hasil Tautan:
+          </label>
+          <input 
+            type="text" 
+            id="customResultLink" 
+            readonly
+            class="w-full bg-[#141414] border border-[#2F2F2F] text-[#C8A65A] font-mono text-xs px-3.5 py-2.5 rounded-sm outline-none"
+          >
+        </div>
+
+        <div class="flex gap-3 pt-2">
+          <button id="btnCopyCustomLink" class="flex-1 py-2.5 bg-[#C8A65A] text-[#0B0B0B] text-xs font-semibold uppercase tracking-wider rounded-sm hover:bg-[#b89548] transition-all flex items-center justify-center gap-1.5">
+            <iconify-icon icon="ph:copy-simple-bold"></iconify-icon>
+            <span>Salin Tautan</span>
+          </button>
+          <a id="btnOpenCustomLink" href="#" target="_blank" class="px-4 py-2.5 border border-[#2F2F2F] text-white hover:border-[#C8A65A] text-xs font-semibold uppercase tracking-wider rounded-sm transition-all flex items-center justify-center gap-1.5">
+            <iconify-icon icon="ph:arrow-square-out-bold"></iconify-icon>
+            <span>Buka</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ========================================================================
+       MODAL: KIRIM & KELOLA UNDANGAN WHATSAPP RESMI
+       ======================================================================== -->
+  <div id="waModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="bg-[#0B0B0B] border border-[#C8A65A] rounded-sm max-w-lg w-full p-6 sm:p-7 shadow-2xl relative">
+      
+      <!-- Top Accent Line -->
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-[2px] bg-gradient-to-r from-transparent via-emerald-400 to-transparent"></div>
+
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between pb-4 border-b border-[#2F2F2F] mb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-sm bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+            <iconify-icon icon="ph:whatsapp-logo-fill" class="text-2xl"></iconify-icon>
+          </div>
+          <div>
+            <h3 class="font-serif text-lg font-semibold text-white">Undangan Resmi WhatsApp</h3>
+            <span class="text-[10px] uppercase tracking-wider text-[#C8A65A]">Edu Fair &amp; Career Expo 2026</span>
+          </div>
+        </div>
+        <button id="btnCloseWaModal" class="text-white/60 hover:text-white text-xl p-1" aria-label="Tutup modal">
+          <iconify-icon icon="ph:x-bold"></iconify-icon>
+        </button>
+      </div>
+
+      <!-- Guest Info Card -->
+      <div class="bg-[#141414] border border-[#2F2F2F] p-3.5 rounded-sm mb-4">
+        <div class="flex items-start justify-between gap-3">
+          <div>
+            <span class="text-[10px] uppercase tracking-wider text-white/40 block mb-0.5">Tamu Undangan Terpilih:</span>
+            <h4 id="waModalGuestName" class="font-serif text-sm font-semibold text-[#C8A65A]">Nama Tamu</h4>
+            <p id="waModalGuestInstansi" class="text-xs text-white/60 font-light mt-0.5">Instansi</p>
+          </div>
+          <span id="waModalGuestCode" class="font-mono text-xs font-bold text-white/70 px-2 py-0.5 border border-[#2F2F2F] bg-[#1a1a1a] rounded-sm">TM01</span>
+        </div>
+      </div>
+
+      <!-- Phone Number Input & Save Control -->
+      <div class="mb-4">
+        <label for="waModalPhoneInput" class="block text-[11px] uppercase tracking-wider text-white/70 font-medium mb-1.5 flex justify-between">
+          <span>Nomor WhatsApp Tujuan:</span>
+          <span class="text-[10px] text-emerald-400 font-mono">Format: 08xx atau 628xx</span>
+        </label>
+        <div class="flex gap-2">
+          <div class="relative flex-1">
+            <iconify-icon icon="ph:phone-bold" class="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40 text-sm"></iconify-icon>
+            <input 
+              type="tel" 
+              id="waModalPhoneInput" 
+              placeholder="Contoh: 081234567890"
+              class="w-full bg-[#141414] border border-[#2F2F2F] focus:border-emerald-500 text-white text-xs pl-10 pr-4 py-2.5 rounded-sm outline-none font-mono transition-colors"
+            >
+          </div>
+          <button 
+            type="button"
+            id="btnSaveWaNumber" 
+            class="px-4 py-2.5 bg-emerald-500/10 border border-emerald-500/40 text-emerald-400 hover:bg-emerald-500 hover:text-black text-xs font-semibold uppercase tracking-wider rounded-sm transition-all flex items-center gap-1.5 whitespace-nowrap"
+            title="Simpan nomor ini ke Supabase & Memori Lokal"
+          >
+            <iconify-icon icon="ph:floppy-disk-bold" id="iconSaveWa"></iconify-icon>
+            <span id="textSaveWa">Simpan No</span>
+          </button>
+        </div>
+        <p id="waPhoneHelpText" class="text-[10px] text-white/40 mt-1 italic">
+          *Jika nomor belum ada, ketik di atas lalu klik <strong>Simpan No</strong> untuk menyimpannya ke database Supabase.
+        </p>
+      </div>
+
+      <!-- Formal Message Preview -->
+      <div class="mb-5">
+        <div class="flex items-center justify-between mb-1.5">
+          <label for="waModalMessagePreview" class="text-[11px] uppercase tracking-wider text-white/70 font-medium flex items-center gap-1.5">
+            <iconify-icon icon="ph:chat-text-bold" class="text-[#C8A65A]"></iconify-icon>
+            <span>Format Pesan Undangan Formal:</span>
+          </label>
+          <button type="button" id="btnCopyWaMessage" class="text-[10px] uppercase tracking-wider text-[#C8A65A] hover:underline flex items-center gap-1">
+            <iconify-icon icon="ph:copy-simple-bold"></iconify-icon>
+            <span>Salin Pesan</span>
+          </button>
+        </div>
+        <textarea 
+          id="waModalMessagePreview" 
+          rows="6" 
+          class="w-full bg-[#141414] border border-[#2F2F2F] focus:border-[#C8A65A] text-white/80 text-[11px] p-3 rounded-sm outline-none font-mono leading-relaxed resize-none"
+        ></textarea>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row gap-3">
+        <button 
+          type="button"
+          id="btnDirectSendWa" 
+          class="flex-1 py-3 bg-emerald-600 hover:bg-emerald-500 text-black font-semibold text-xs uppercase tracking-[0.15em] rounded-sm transition-all flex items-center justify-center gap-2 shadow-lg"
+        >
+          <iconify-icon icon="ph:paper-plane-tilt-bold" class="text-base"></iconify-icon>
+          <span>Buka &amp; Kirim WhatsApp</span>
+        </button>
+        <button 
+          type="button"
+          id="btnCloseWaModalBottom" 
+          class="px-4 py-3 border border-[#2F2F2F] text-white/60 hover:text-white text-xs uppercase tracking-wider rounded-sm transition-all"
+        >
+          Tutup
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  </div> <!-- Penutup #adminApp -->
+
+
+  <!-- ========================================================================
+       TOAST FEEDBACK NOTIFICATION
+       ======================================================================== -->
+  <div id="toast" class="fixed top-6 left-1/2 -translate-x-1/2 z-[10001] bg-[#0B0B0B] border border-[#C8A65A] text-white px-6 py-3 rounded-sm shadow-2xl text-xs tracking-wider uppercase font-medium hidden flex items-center gap-2">
+    <iconify-icon icon="ph:check-circle-fill" class="text-[#C8A65A] text-base"></iconify-icon>
+    <span id="toastMsg">Teks berhasil disalin!</span>
+  </div>
+
+
+  <!-- Supabase JS Client v2 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Konfigurasi Supabase -->
+  <script src="js/config.js"></script>
+
+  <!-- Script Logika Admin Dashboard -->
+  <script>
+    // DATASET 34 TAMU LENGKAP
+    const LOCAL_GUESTS = [
+      { id: 1, code: "TM01", nama_tamu: "Universitas Pembangunan Jaya", instansi: "Universitas Pembangunan Jaya", kategori: "Universitas", no_whatsapp: "", display_name: "Universitas Pembangunan Jaya" },
+      { id: 2, code: "TM02", nama_tamu: "Cakra Zebua", instansi: "President University", kategori: "Universitas", no_whatsapp: "628225000000", display_name: "Cakra Zebua - President University" },
+      { id: 3, code: "TM03", nama_tamu: "Mahbub Haikal", instansi: "Universitas Multimedia Nusantara", kategori: "Universitas", no_whatsapp: "628585000000", display_name: "Mahbub Haikal - Universitas Multimedia Nusantara" },
+      { id: 4, code: "TM04", nama_tamu: "Universitas Muhammadiyah Tangerang", instansi: "Universitas Muhammadiyah Tangerang", kategori: "Universitas", no_whatsapp: "", display_name: "Universitas Muhammadiyah Tangerang" },
+      { id: 5, code: "TM05", nama_tamu: "Andra", instansi: "Universitas Mercubuana", kategori: "Universitas", no_whatsapp: "628953000000", display_name: "Andra - Universitas Mercubuana" },
+      { id: 6, code: "TM06", nama_tamu: "Dyah Palupi", instansi: "UT Serang", kategori: "Universitas", no_whatsapp: "62818791755", display_name: "Dyah Palupi - UT Serang" },
+      { id: 7, code: "TM07", nama_tamu: "Deswa", instansi: "Universitas Budi Luhur", kategori: "Universitas", no_whatsapp: "6281280890067", display_name: "Deswa - Universitas Budi Luhur" },
+      { id: 8, code: "TM08", nama_tamu: "Universitas Pradita", instansi: "Universitas Pradita", kategori: "Universitas", no_whatsapp: "628531000000", display_name: "Universitas Pradita" },
+      { id: 9, code: "TM09", nama_tamu: "Chendri Irawan", instansi: "ITTS", kategori: "Universitas", no_whatsapp: "628152000000", display_name: "Chendri Irawan - ITTS" },
+      { id: 10, code: "TM10", nama_tamu: "", instansi: "Pengawas SMKN 6 Kota Tangerang Selatan", kategori: "Tamu", no_whatsapp: "", display_name: "Pengawas SMKN 6 Kota Tangerang Selatan" },
+      { id: 11, code: "TM11", nama_tamu: "", instansi: "Kepala SMKN 1 Kota Tangerang Selatan", kategori: "Tamu", no_whatsapp: "", display_name: "Kepala SMKN 1 Kota Tangerang Selatan" },
+      { id: 12, code: "TM12", nama_tamu: "", instansi: "Kepala SMKN 2 Kota Tangerang Selatan", kategori: "Tamu", no_whatsapp: "", display_name: "Kepala SMKN 2 Kota Tangerang Selatan" },
+      { id: 13, code: "TM13", nama_tamu: "", instansi: "Kepala SMKN 3 Kota Tangerang Selatan", kategori: "Tamu", no_whatsapp: "", display_name: "Kepala SMKN 3 Kota Tangerang Selatan" },
+      { id: 14, code: "TM14", nama_tamu: "", instansi: "Kepala SMKN 4 Kota Tangerang Selatan", kategori: "Tamu", no_whatsapp: "", display_name: "Kepala SMKN 4 Kota Tangerang Selatan" },
+      { id: 15, code: "TM15", nama_tamu: "", instansi: "Kepala SMKN 5 Kota Tangerang Selatan", kategori: "Tamu", no_whatsapp: "", display_name: "Kepala SMKN 5 Kota Tangerang Selatan" },
+      { id: 16, code: "TM16", nama_tamu: "", instansi: "Kepala SMKN 7 Kota Tangerang Selatan", kategori: "Tamu", no_whatsapp: "", display_name: "Kepala SMKN 7 Kota Tangerang Selatan" },
+      { id: 17, code: "TM17", nama_tamu: "", instansi: "Kepala SMKN 8 Kota Tangerang Selatan", kategori: "Tamu", no_whatsapp: "", display_name: "Kepala SMKN 8 Kota Tangerang Selatan" },
+      { id: 18, code: "TM18", nama_tamu: "", instansi: "Kepala Cabang Dinas Pendidikan Kotangsel", kategori: "Tamu", no_whatsapp: "", display_name: "Kepala Cabang Dinas Pendidikan Kotangsel" },
+      { id: 19, code: "TM19", nama_tamu: "", instansi: "Disnaker", kategori: "Tamu", no_whatsapp: "", display_name: "Disnaker" },
+      { id: 20, code: "TM20", nama_tamu: "", instansi: "BLKI", kategori: "Tamu", no_whatsapp: "", display_name: "BLKI" },
+      { id: 21, code: "TM21", nama_tamu: "Orang Tua Murid", instansi: "Orang Tua Murid", kategori: "Tamu", no_whatsapp: "628226000000", display_name: "Orang Tua Murid" },
+      { id: 22, code: "TM22", nama_tamu: "Alumni", instansi: "Alumni", kategori: "Alumni", no_whatsapp: "628226000000", display_name: "Alumni" },
+      { id: 23, code: "TM23", nama_tamu: "AXIS", instansi: "AXIS", kategori: "Sponshorsip", no_whatsapp: "", display_name: "AXIS" },
+      { id: 24, code: "TM24", nama_tamu: "Ista Widyastuti", instansi: "Yakult", kategori: "Sponshorsip", no_whatsapp: "628522000000", display_name: "Ista Widyastuti - Yakult" },
+      { id: 25, code: "TM25", nama_tamu: "Indomaret", instansi: "Indomaret", kategori: "Sponshorsip", no_whatsapp: "", display_name: "Indomaret" },
+      { id: 26, code: "TM26", nama_tamu: "Alfamidi", instansi: "Alfamidi", kategori: "Sponshorsip", no_whatsapp: "", display_name: "Alfamidi" },
+      { id: 27, code: "TM27", nama_tamu: "BCA", instansi: "BCA", kategori: "Sponshorsip", no_whatsapp: "", display_name: "BCA" },
+      { id: 28, code: "TM28", nama_tamu: "Dinas Koperasi", instansi: "Dinas Koperasi", kategori: "Sponshorsip", no_whatsapp: "", display_name: "Dinas Koperasi" },
+      { id: 29, code: "TM29", nama_tamu: "DPRD", instansi: "DPRD", kategori: "Sponshorsip", no_whatsapp: "", display_name: "DPRD" },
+      { id: 30, code: "TM30", nama_tamu: "Kelurahan Serpong/Polres Tangsel", instansi: "Kelurahan Serpong/Polres Tangsel", kategori: "Sponshorsip", no_whatsapp: "", display_name: "Kelurahan Serpong/Polres Tangsel" },
+      { id: 31, code: "TM31", nama_tamu: "", instansi: "Worrie.id", kategori: "Sponshorsip", no_whatsapp: "", display_name: "Worrie.id" },
+      { id: 32, code: "TM32", nama_tamu: "Kiki Hermawan Legowo", instansi: "PT. Pasifik Cipta Nusantara", kategori: "Industri", no_whatsapp: "628151000000", display_name: "Kiki Hermawan Legowo - PT. Pasifik Cipta Nusantara" },
+      { id: 33, code: "TM33", nama_tamu: "Mandiri", instansi: "Mandiri", kategori: "Sponshorsip", no_whatsapp: "", display_name: "Mandiri" },
+      { id: 34, code: "TM34", nama_tamu: "UHAMKA", instansi: "UHAMKA", kategori: "Universitas", no_whatsapp: "", display_name: "UHAMKA" },
+    ];
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      let supabaseClient = null;
+      let isSupabaseActive = false;
+      let guestsData = [...LOCAL_GUESTS];
+      let rsvpsData = [];
+      let isDataLoaded = false;
+
+      // ----------------------------------------------------------------------
+      // ELEMEN AUTENTIKASI PANITIA
+      // ----------------------------------------------------------------------
+      const authGate = document.getElementById("authGate");
+      const adminApp = document.getElementById("adminApp");
+      const authForm = document.getElementById("authForm");
+      const adminPasscode = document.getElementById("adminPasscode");
+      const btnTogglePassword = document.getElementById("btnTogglePassword");
+      const eyeIcon = document.getElementById("eyeIcon");
+      const rememberMe = document.getElementById("rememberMe");
+      const authErrorBox = document.getElementById("authErrorBox");
+      const authErrorMsg = document.getElementById("authErrorMsg");
+      const btnSubmitAuth = document.getElementById("btnSubmitAuth");
+      const btnLogout = document.getElementById("btnLogout");
+
+      const AUTH_SESSION_KEY = (APP_CONFIG.admin && APP_CONFIG.admin.sessionKey) || "edufair2026_admin_authenticated";
+      const LOCKOUT_KEY = "edufair_admin_lockout_until";
+      const ATTEMPTS_KEY = "edufair_admin_failed_attempts";
+      const VALID_PASSCODES = (APP_CONFIG.admin && APP_CONFIG.admin.passcodes) || ["panitia2026", "edufair2026", "smkn6tangsel"];
+
+      // 1. Inisialisasi Supabase
+      if (
+        typeof window.supabase !== "undefined" &&
+        typeof APP_CONFIG !== "undefined" &&
+        APP_CONFIG.supabase &&
+        APP_CONFIG.supabase.url &&
+        APP_CONFIG.supabase.anonKey
+      ) {
+        try {
+          supabaseClient = window.supabase.createClient(APP_CONFIG.supabase.url.trim(), APP_CONFIG.supabase.anonKey.trim());
+          isSupabaseActive = true;
+        } catch (e) {
+          isSupabaseActive = false;
+        }
+      }
+
+      // Base URL untuk membuat link undangan
+      const baseUrl = window.location.origin + window.location.pathname.replace("admin.html", "index.html");
+
+      // Elements
+      const guestsTableBody = document.getElementById("guestsTableBody");
+      const rsvpsTableBody = document.getElementById("rsvpsTableBody");
+      const searchGuests = document.getElementById("searchGuests");
+      const filterCategory = document.getElementById("filterCategory");
+      const searchRsvps = document.getElementById("searchRsvps");
+      const filterRsvpStatus = document.getElementById("filterRsvpStatus");
+
+      // Stats Elements
+      const statTotalGuests = document.getElementById("statTotalGuests");
+      const statTotalRsvps = document.getElementById("statTotalRsvps");
+      const statAttending = document.getElementById("statAttending");
+      const statNotAttending = document.getElementById("statNotAttending");
+      const tabCountGuests = document.getElementById("tabCountGuests");
+      const tabCountRsvps = document.getElementById("tabCountRsvps");
+      const syncStatus = document.getElementById("syncStatus");
+
+      // Toast feedback
+      const toast = document.getElementById("toast");
+      const toastMsg = document.getElementById("toastMsg");
+      let toastTimer = null;
+      function showToast(msg) {
+        if (!toast) return;
+        toastMsg.textContent = msg;
+        toast.classList.remove("hidden");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.add("hidden"), 2500);
+      }
+
+      // 2. Fetch Data Guests
+      async function loadGuests() {
+        if (isSupabaseActive) {
+          try {
+            const { data, error } = await supabaseClient
+              .from(APP_CONFIG.supabase.tables.guests)
+              .select("*")
+              .order("id", { ascending: true });
+
+            if (!error && data && data.length > 0) {
+              guestsData = data;
+              syncStatus.textContent = "Supabase Cloud: Terhubung";
+            } else {
+              guestsData = LOCAL_GUESTS;
+              syncStatus.textContent = "Data Lokal (tamuedufair.csv)";
+            }
+          } catch (e) {
+            guestsData = LOCAL_GUESTS;
+            syncStatus.textContent = "Data Lokal (tamuedufair.csv)";
+          }
+        } else {
+          guestsData = LOCAL_GUESTS;
+          syncStatus.textContent = "Data Lokal (tamuedufair.csv)";
+        }
+
+        // Sinkronkan dengan nomor WhatsApp yang pernah ditambah/diedit secara lokal
+        try {
+          const customPhones = JSON.parse(localStorage.getItem("edufair_custom_phones") || "{}");
+          guestsData.forEach(g => {
+            if (customPhones[g.code]) {
+              g.no_whatsapp = customPhones[g.code];
+            }
+          });
+        } catch (e) {}
+
+        statTotalGuests.textContent = guestsData.length;
+        tabCountGuests.textContent = guestsData.length;
+        renderGuestsTable();
+      }
+
+      // Helper Fungsi Normalisasi dan Format No WhatsApp
+      function cleanPhoneNumber(phone) {
+        if (!phone) return "";
+        let p = phone.toString().replace(/[^0-9]/g, "");
+        if (p.startsWith("0")) {
+          p = "62" + p.slice(1);
+        } else if (p.startsWith("8")) {
+          p = "62" + p;
+        }
+        return p;
+      }
+
+      function formatPhoneDisplay(phone) {
+        if (!phone) return "";
+        const clean = cleanPhoneNumber(phone);
+        if (clean.startsWith("62")) {
+          const rest = clean.slice(2);
+          if (rest.length > 7) {
+            return `+62 ${rest.slice(0, 3)}-${rest.slice(3, 7)}-${rest.slice(7)}`;
+          }
+          return `+62 ${rest}`;
+        }
+        return clean;
+      }
+
+      // Template Pesan Undangan Resmi & Formal WhatsApp
+      function generateFormalWaMessage(guest) {
+        const inviteUrl = `${baseUrl}?code=${guest.code}`;
+        const title = guest.display_name || guest.nama_tamu || guest.instansi || "Bapak/Ibu/Saudara/i";
+
+        return `Kepada Yth.
+Bapak/Ibu/Saudara/i ${title}
+di Tempat
+
+Assalamu’alaikum Warahmatullahi Wabarakatuh / Salam Sejahtera,
+
+Dengan hormat,
+Sehubungan dengan diselenggarakannya agenda tahunan sekolah kami, Panitia Pelaksana SMKN 6 Tangerang Selatan bermaksud mengundang Bapak/Ibu/Saudara/i untuk berkenan hadir sebagai Tamu Kehormatan pada acara:
+
+✨ EDU FAIR & CAREER EXPO 2026 ✨
+"Connecting Competence to Future : Bekerja, Melanjutkan, Berwirausaha"
+
+📅 Hari, Tanggal : Rabu, 25 November 2026
+⏰ Waktu : Pukul 07.00 WIB s/d Selesai
+📍 Lokasi : Kampus SMKN 6 Tangerang Selatan
+(Jl. Magnolia VI No. 6, Jelupang, Kec. Serpong Utara, Kota Tangerang Selatan)
+
+Sebagai bentuk penghormatan dan efisiensi informasi, kami telah menyiapkan Tautan Undangan Digital Resmi khusus untuk Bapak/Ibu/Saudara/i:
+🔗 ${inviteUrl}
+
+Melalui tautan undangan resmi di atas, Bapak/Ibu/Saudara/i dapat melihat rincian agenda acara, petunjuk lokasi Google Maps, serta melakukan konfirmasi kehadiran (RSVP).
+
+Besar harapan kami atas kesediaan Bapak/Ibu/Saudara/i untuk hadir dalam agenda istimewa ini. Kehadiran serta doa restu Bapak/Ibu/Saudara/i merupakan kehormatan yang sangat besar bagi kami dan seluruh keluarga besar SMKN 6 Tangerang Selatan.
+
+Atas perhatian, perkenan kehadiran, dan kerja samanya, kami haturkan terima kasih.
+
+Hormat kami,
+Panitia Pelaksana Edu Fair & Career Expo 2026
+SMKN 6 Tangerang Selatan`;
+      }
+
+      // 3. Fetch Data RSVPs
+      async function loadRsvps() {
+        let loaded = [];
+        if (isSupabaseActive) {
+          try {
+            const { data, error } = await supabaseClient
+              .from(APP_CONFIG.supabase.tables.rsvps)
+              .select("*")
+              .order("created_at", { ascending: false });
+
+            if (!error && data && data.length > 0) {
+              loaded = data;
+            }
+          } catch (e) {}
+        }
+
+        // Gabungkan atau fallback dengan LocalStorage
+        if (loaded.length === 0) {
+          try {
+            const local = JSON.parse(localStorage.getItem("edufair_tangsel_rsvp_2026") || "[]");
+            loaded = local.map((item, idx) => ({
+              id: item.id || `local-${idx}`,
+              guest_name: item.name || item.guest_name,
+              status: item.status,
+              guest_count: item.guests || item.guest_count || "1 Orang",
+              message: item.message,
+              created_at: item.created_at || new Date().toISOString()
+            }));
+          } catch (e) {}
+        }
+
+        rsvpsData = loaded;
+        updateRsvpStats();
+        renderRsvpsTable();
+      }
+
+      function updateRsvpStats() {
+        statTotalRsvps.textContent = rsvpsData.length;
+        tabCountRsvps.textContent = rsvpsData.length;
+
+        const attending = rsvpsData.filter(r => r.status === "Hadir").length;
+        const notAttending = rsvpsData.filter(r => r.status !== "Hadir").length;
+
+        statAttending.textContent = attending;
+        statNotAttending.textContent = notAttending;
+      }
+
+      // Render Guests Table
+      function renderGuestsTable() {
+        const query = searchGuests.value.toLowerCase().trim();
+        const cat = filterCategory.value;
+
+        const filtered = guestsData.filter(g => {
+          const matchCat = (cat === "ALL") || (g.kategori === cat);
+          const matchQuery = !query || 
+            (g.code && g.code.toLowerCase().includes(query)) ||
+            (g.display_name && g.display_name.toLowerCase().includes(query)) ||
+            (g.nama_tamu && g.nama_tamu.toLowerCase().includes(query)) ||
+            (g.instansi && g.instansi.toLowerCase().includes(query));
+          return matchCat && matchQuery;
+        });
+
+        if (filtered.length === 0) {
+          guestsTableBody.innerHTML = `<tr><td colspan="5" class="py-8 text-center text-white/40 italic">Tidak ada data tamu yang cocok dengan pencarian.</td></tr>`;
+          return;
+        }
+
+        guestsTableBody.innerHTML = filtered.map(g => {
+          const inviteUrl = `${baseUrl}?code=${g.code}`;
+          const cleanPhone = cleanPhoneNumber(g.no_whatsapp);
+          const displayPhone = formatPhoneDisplay(g.no_whatsapp);
+
+          return `
+            <tr class="hover:bg-[#141414] transition-colors">
+              <td class="py-3 px-4 text-center font-mono font-bold text-[#C8A65A]">${g.code}</td>
+              <td class="py-3 px-4">
+                <strong class="font-serif text-white font-medium block text-sm">${g.display_name}</strong>
+                ${g.nama_tamu && g.instansi && g.nama_tamu !== g.instansi ? `<span class="text-white/40 text-[11px]">${g.instansi}</span>` : ""}
+              </td>
+              <td class="py-3 px-4">
+                <span class="px-2 py-0.5 border border-[#2F2F2F] bg-[#1a1a1a] text-white/70 rounded-sm text-[10px] uppercase font-medium">
+                  ${g.kategori || "Tamu"}
+                </span>
+              </td>
+              <td class="py-3 px-4">
+                ${cleanPhone ? `
+                  <div class="flex items-center gap-1.5 font-mono text-emerald-400">
+                    <iconify-icon icon="ph:whatsapp-logo-fill" class="text-emerald-400 text-sm shrink-0"></iconify-icon>
+                    <span class="text-xs">${displayPhone}</span>
+                    <button class="btn-open-wa text-white/30 hover:text-[#C8A65A] p-0.5 transition-colors" data-code="${g.code}" title="Kelola / Ubah Nomor WhatsApp">
+                      <iconify-icon icon="ph:pencil-simple-bold" class="text-xs"></iconify-icon>
+                    </button>
+                  </div>
+                ` : `
+                  <button class="btn-open-wa inline-flex items-center gap-1 px-2.5 py-1 border border-[#C8A65A]/40 bg-[#C8A65A]/5 text-[#C8A65A] hover:bg-[#C8A65A] hover:text-[#0B0B0B] text-[10px] font-semibold uppercase tracking-wider rounded-sm transition-all" data-code="${g.code}">
+                    <iconify-icon icon="ph:plus-bold"></iconify-icon>
+                    <span>Tambah WA</span>
+                  </button>
+                `}
+              </td>
+              <td class="py-3 px-4 text-center">
+                <div class="flex items-center justify-center gap-1.5">
+                  <!-- Tombol Kirim Undangan Formal WA -->
+                  <button class="btn-open-wa px-2.5 py-1.5 bg-emerald-500/10 border border-emerald-500/40 text-emerald-400 hover:bg-emerald-500 hover:text-black text-[10px] font-semibold uppercase tracking-wider rounded-sm transition-all flex items-center gap-1 shadow-sm" data-code="${g.code}" title="Kirim Undangan Formal via WhatsApp">
+                    <iconify-icon icon="ph:whatsapp-logo-fill" class="text-sm"></iconify-icon>
+                    <span>Kirim WA</span>
+                  </button>
+
+                  <!-- Tombol Salin Link Personal -->
+                  <button class="btn-copy-link px-2.5 py-1.5 bg-[#C8A65A]/10 border border-[#C8A65A]/30 text-[#C8A65A] hover:bg-[#C8A65A] hover:text-[#0B0B0B] text-[10px] font-semibold uppercase tracking-wider rounded-sm transition-all flex items-center gap-1" data-url="${inviteUrl}" title="Salin Tautan Personal Tamu">
+                    <iconify-icon icon="ph:copy-simple-bold"></iconify-icon>
+                    <span>Salin</span>
+                  </button>
+
+                  <!-- Tombol Buka Web -->
+                  <a href="${inviteUrl}" target="_blank" class="px-2 py-1.5 border border-[#2F2F2F] text-white/70 hover:text-white hover:border-[#C8A65A] rounded-sm transition-all flex items-center" title="Buka Tampilan Undangan">
+                    <iconify-icon icon="ph:arrow-square-out-bold"></iconify-icon>
+                  </a>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join("");
+
+        // Attach Copy Event Listener
+        document.querySelectorAll(".btn-copy-link").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const url = btn.getAttribute("data-url");
+            navigator.clipboard.writeText(url).then(() => {
+              showToast("Tautan undangan tamu berhasil disalin!");
+            });
+          });
+        });
+
+        // Attach WhatsApp Modal Trigger Listener
+        document.querySelectorAll(".btn-open-wa").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const code = btn.getAttribute("data-code");
+            openWaModalForGuest(code);
+          });
+        });
+      }
+
+      // Render RSVPs Table
+      function renderRsvpsTable() {
+        const query = searchRsvps.value.toLowerCase().trim();
+        const stat = filterRsvpStatus.value;
+
+        const filtered = rsvpsData.filter(r => {
+          const matchStatus = (stat === "ALL") || (r.status === stat);
+          const matchQuery = !query ||
+            (r.guest_name && r.guest_name.toLowerCase().includes(query)) ||
+            (r.message && r.message.toLowerCase().includes(query));
+          return matchStatus && matchQuery;
+        });
+
+        if (filtered.length === 0) {
+          rsvpsTableBody.innerHTML = `<tr><td colspan="5" class="py-8 text-center text-white/40 italic">Belum ada respon RSVP yang cocok.</td></tr>`;
+          return;
+        }
+
+        rsvpsTableBody.innerHTML = filtered.map(r => {
+          const badgeClass = r.status === "Hadir" 
+            ? "border-emerald-500/40 text-emerald-400 bg-emerald-500/10" 
+            : r.status === "Tidak Hadir" 
+            ? "border-red-500/40 text-red-400 bg-red-500/10" 
+            : "border-yellow-500/40 text-yellow-400 bg-yellow-500/10";
+
+          let dateText = "Baru Saja";
+          if (r.created_at) {
+            try {
+              dateText = new Date(r.created_at).toLocaleDateString("id-ID", {
+                day: "numeric", month: "short", hour: "2-digit", minute: "2-digit"
+              });
+            } catch (e) {}
+          }
+
+          return `
+            <tr class="hover:bg-[#141414] transition-colors">
+              <td class="py-3 px-4 font-mono text-white/40 text-[11px] whitespace-nowrap">${dateText}</td>
+              <td class="py-3 px-4">
+                <strong class="font-serif text-white font-medium block">${r.guest_name || "Tamu"}</strong>
+              </td>
+              <td class="py-3 px-4 text-center">
+                <span class="px-2.5 py-0.5 border rounded-sm text-[10px] uppercase font-bold tracking-wider ${badgeClass}">
+                  ${r.status || "Hadir"}
+                </span>
+              </td>
+              <td class="py-3 px-4 text-white/70">
+                <span class="flex items-center gap-1">
+                  <iconify-icon icon="ph:users-bold" class="text-[#C8A65A]"></iconify-icon>
+                  ${r.guest_count || "1 Orang"}
+                </span>
+              </td>
+              <td class="py-3 px-4 text-white/80 leading-relaxed font-light">
+                ${r.message || "-"}
+              </td>
+            </tr>
+          `;
+        }).join("");
+      }
+
+      // Filter Event Listeners
+      searchGuests.addEventListener("input", renderGuestsTable);
+      filterCategory.addEventListener("change", renderGuestsTable);
+      searchRsvps.addEventListener("input", renderRsvpsTable);
+      filterRsvpStatus.addEventListener("change", renderRsvpsTable);
+
+      // Tab Switching
+      const tabBtnGuests = document.getElementById("tabBtnGuests");
+      const tabBtnRsvps = document.getElementById("tabBtnRsvps");
+      const tabContentGuests = document.getElementById("tabContentGuests");
+      const tabContentRsvps = document.getElementById("tabContentRsvps");
+
+      tabBtnGuests.addEventListener("click", () => {
+        tabBtnGuests.classList.add("border-[#C8A65A]", "text-[#C8A65A]");
+        tabBtnGuests.classList.remove("border-transparent", "text-white/50");
+        tabBtnRsvps.classList.remove("border-[#C8A65A]", "text-[#C8A65A]");
+        tabBtnRsvps.classList.add("border-transparent", "text-white/50");
+
+        tabContentGuests.classList.remove("hidden");
+        tabContentRsvps.classList.add("hidden");
+      });
+
+      tabBtnRsvps.addEventListener("click", () => {
+        tabBtnRsvps.classList.add("border-[#C8A65A]", "text-[#C8A65A]");
+        tabBtnRsvps.classList.remove("border-transparent", "text-white/50");
+        tabBtnGuests.classList.remove("border-[#C8A65A]", "text-[#C8A65A]");
+        tabBtnGuests.classList.add("border-transparent", "text-white/50");
+
+        tabContentRsvps.classList.remove("hidden");
+        tabContentGuests.classList.add("hidden");
+      });
+
+      // Refresh Button
+      const btnRefresh = document.getElementById("btnRefresh");
+      const refreshIcon = document.getElementById("refreshIcon");
+      btnRefresh.addEventListener("click", async () => {
+        refreshIcon.classList.add("animate-spin");
+        await loadGuests();
+        await loadRsvps();
+        setTimeout(() => refreshIcon.classList.remove("animate-spin"), 600);
+        showToast("Data berhasil disegarkan!");
+      });
+
+      // Custom Link Generator Modal
+      const btnOpenLinkGen = document.getElementById("btnOpenLinkGen");
+      const linkGenModal = document.getElementById("linkGenModal");
+      const btnCloseLinkGen = document.getElementById("btnCloseLinkGen");
+      const customGuestInput = document.getElementById("customGuestInput");
+      const customResultLink = document.getElementById("customResultLink");
+      const btnCopyCustomLink = document.getElementById("btnCopyCustomLink");
+      const btnOpenCustomLink = document.getElementById("btnOpenCustomLink");
+
+      function updateCustomLink() {
+        const val = customGuestInput.value.trim();
+        const url = val ? `${baseUrl}?to=${encodeURIComponent(val)}` : baseUrl;
+        customResultLink.value = url;
+        btnOpenCustomLink.href = url;
+      }
+
+      btnOpenLinkGen.addEventListener("click", () => {
+        linkGenModal.classList.remove("hidden");
+        customGuestInput.focus();
+        updateCustomLink();
+      });
+
+      btnCloseLinkGen.addEventListener("click", () => {
+        linkGenModal.classList.add("hidden");
+      });
+
+      customGuestInput.addEventListener("input", updateCustomLink);
+
+      btnCopyCustomLink.addEventListener("click", () => {
+        navigator.clipboard.writeText(customResultLink.value).then(() => {
+          showToast("Tautan kustom berhasil disalin!");
+          linkGenModal.classList.add("hidden");
+        });
+      });
+
+      // Export RSVPs to CSV
+      const btnExportRsvps = document.getElementById("btnExportRsvps");
+      btnExportRsvps.addEventListener("click", () => {
+        if (rsvpsData.length === 0) {
+          alert("Belum ada data RSVP untuk diekspor.");
+          return;
+        }
+
+        const headers = ["Waktu", "Nama Tamu", "Status Kehadiran", "Jumlah Rombongan", "Pesan dan Ucapan"];
+        const rows = rsvpsData.map(r => [
+          `"${r.created_at || ''}"`,
+          `"${(r.guest_name || '').replace(/"/g, '""')}"`,
+          `"${r.status || ''}"`,
+          `"${r.guest_count || ''}"`,
+          `"${(r.message || '').replace(/"/g, '""')}"`
+        ]);
+
+        const csvContent = "data:text/csv;charset=utf-8," + [headers.join(","), ...rows.map(e => e.join(","))].join("\n");
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `Rekap_RSVP_EduFair_SMKN6_${Date.now()}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        showToast("Rekap CSV berhasil diunduh!");
+      });
+
+      // ======================================================================
+      // MODAL KIRIM & KELOLA UNDANGAN WHATSAPP RESMI
+      // ======================================================================
+      const waModal = document.getElementById("waModal");
+      const btnCloseWaModal = document.getElementById("btnCloseWaModal");
+      const btnCloseWaModalBottom = document.getElementById("btnCloseWaModalBottom");
+      const waModalGuestName = document.getElementById("waModalGuestName");
+      const waModalGuestInstansi = document.getElementById("waModalGuestInstansi");
+      const waModalGuestCode = document.getElementById("waModalGuestCode");
+      const waModalPhoneInput = document.getElementById("waModalPhoneInput");
+      const btnSaveWaNumber = document.getElementById("btnSaveWaNumber");
+      const btnCopyWaMessage = document.getElementById("btnCopyWaMessage");
+      const waModalMessagePreview = document.getElementById("waModalMessagePreview");
+      const btnDirectSendWa = document.getElementById("btnDirectSendWa");
+      const iconSaveWa = document.getElementById("iconSaveWa");
+      const textSaveWa = document.getElementById("textSaveWa");
+
+      let activeGuestForWa = null;
+
+      function openWaModalForGuest(code) {
+        const guest = guestsData.find(g => g.code === code);
+        if (!guest) return;
+        activeGuestForWa = guest;
+
+        waModalGuestName.textContent = guest.display_name;
+        waModalGuestInstansi.textContent = guest.instansi || guest.kategori || "-";
+        waModalGuestCode.textContent = guest.code;
+        waModalPhoneInput.value = guest.no_whatsapp ? cleanPhoneNumber(guest.no_whatsapp) : "";
+        waModalMessagePreview.value = generateFormalWaMessage(guest);
+
+        waModal.classList.remove("hidden");
+        if (!guest.no_whatsapp) {
+          setTimeout(() => waModalPhoneInput.focus(), 150);
+        }
+      }
+
+      function closeWaModal() {
+        if (waModal) waModal.classList.add("hidden");
+        activeGuestForWa = null;
+      }
+
+      if (btnCloseWaModal) btnCloseWaModal.addEventListener("click", closeWaModal);
+      if (btnCloseWaModalBottom) btnCloseWaModalBottom.addEventListener("click", closeWaModal);
+
+      // Simpan nomor WhatsApp tamu (ke Supabase dan localStorage)
+      async function saveWaNumberForActiveGuest() {
+        if (!activeGuestForWa) return false;
+        const raw = waModalPhoneInput.value.trim();
+        const clean = cleanPhoneNumber(raw);
+
+        if (!clean || clean.length < 9) {
+          showToast("Mohon masukkan nomor WhatsApp yang valid (minimal 9 digit).");
+          waModalPhoneInput.focus();
+          return false;
+        }
+
+        activeGuestForWa.no_whatsapp = clean;
+
+        // 1. Simpan ke localStorage agar selalu persisten offline/online
+        try {
+          const customPhones = JSON.parse(localStorage.getItem("edufair_custom_phones") || "{}");
+          customPhones[activeGuestForWa.code] = clean;
+          localStorage.setItem("edufair_custom_phones", JSON.stringify(customPhones));
+        } catch (e) {}
+
+        // 2. Simpan ke database Supabase Cloud jika aktif
+        if (isSupabaseActive && supabaseClient) {
+          try {
+            if (iconSaveWa && textSaveWa) {
+              iconSaveWa.setAttribute("icon", "ph:spinner-gap-bold");
+              iconSaveWa.classList.add("animate-spin");
+              textSaveWa.textContent = "Menyimpan...";
+            }
+
+            const { error } = await supabaseClient
+              .from(APP_CONFIG.supabase.tables.guests)
+              .update({ no_whatsapp: clean })
+              .eq("code", activeGuestForWa.code);
+
+            if (error) {
+              console.warn("Update Supabase warning:", error.message);
+            }
+          } catch (err) {
+            console.warn("Update Supabase error:", err);
+          } finally {
+            if (iconSaveWa && textSaveWa) {
+              iconSaveWa.setAttribute("icon", "ph:check-bold");
+              iconSaveWa.classList.remove("animate-spin");
+              textSaveWa.textContent = "Tersimpan!";
+              setTimeout(() => {
+                iconSaveWa.setAttribute("icon", "ph:floppy-disk-bold");
+                textSaveWa.textContent = "Simpan No";
+              }, 1800);
+            }
+          }
+        }
+
+        renderGuestsTable();
+        showToast(`Nomor WA ${activeGuestForWa.code} berhasil diperbarui!`);
+        return true;
+      }
+
+      if (btnSaveWaNumber) {
+        btnSaveWaNumber.addEventListener("click", saveWaNumberForActiveGuest);
+      }
+
+      // Salin Teks Pesan Formal
+      if (btnCopyWaMessage) {
+        btnCopyWaMessage.addEventListener("click", () => {
+          if (!waModalMessagePreview) return;
+          navigator.clipboard.writeText(waModalMessagePreview.value).then(() => {
+            showToast("Pesan undangan formal berhasil disalin!");
+          });
+        });
+      }
+
+      // Kirim Langsung via WhatsApp
+      if (btnDirectSendWa) {
+        btnDirectSendWa.addEventListener("click", async () => {
+          if (!activeGuestForWa) return;
+          const raw = waModalPhoneInput.value.trim();
+          if (!raw) {
+            showToast("Harap masukkan nomor WhatsApp terlebih dahulu.");
+            waModalPhoneInput.focus();
+            return;
+          }
+
+          // Simpan nomor jika baru diinput atau diubah
+          const saved = await saveWaNumberForActiveGuest();
+          if (!saved) return;
+
+          const clean = cleanPhoneNumber(activeGuestForWa.no_whatsapp);
+          const msg = waModalMessagePreview.value.trim();
+          const waUrl = `https://api.whatsapp.com/send?phone=${clean}&text=${encodeURIComponent(msg)}`;
+
+          showToast("Membuka aplikasi WhatsApp...");
+          window.open(waUrl, "_blank");
+        });
+      }
+
+      // ======================================================================
+      // SISTEM VERIFIKASI AKSES KHUSUS PANITIA
+      // ======================================================================
+
+      // 1. Toggle visibility kata sandi (Mata)
+      if (btnTogglePassword && adminPasscode && eyeIcon) {
+        btnTogglePassword.addEventListener("click", () => {
+          const isPassword = adminPasscode.type === "password";
+          adminPasscode.type = isPassword ? "text" : "password";
+          eyeIcon.setAttribute("icon", isPassword ? "ph:eye-bold" : "ph:eye-slash-bold");
+        });
+      }
+
+      // 2. Cek status lockout sementara jika banyak salah
+      function checkLockout() {
+        const lockoutUntil = parseInt(localStorage.getItem(LOCKOUT_KEY) || "0", 10);
+        const now = Date.now();
+        if (lockoutUntil > now) {
+          const remainingSecs = Math.ceil((lockoutUntil - now) / 1000);
+          showAuthError(`Akses dikunci sementara karena terlalu banyak percobaan gagal. Silakan tunggu ${remainingSecs} detik.`);
+          btnSubmitAuth.disabled = true;
+          adminPasscode.disabled = true;
+          return true;
+        } else {
+          btnSubmitAuth.disabled = false;
+          adminPasscode.disabled = false;
+          return false;
+        }
+      }
+
+      function showAuthError(msg) {
+        if (!authErrorBox || !authErrorMsg) return;
+        authErrorMsg.textContent = msg;
+        authErrorBox.classList.remove("hidden");
+      }
+
+      function hideAuthError() {
+        if (!authErrorBox) return;
+        authErrorBox.classList.add("hidden");
+      }
+
+      // 3. Cek Status Autentikasi
+      function checkAuthStatus() {
+        const sessionAuth = sessionStorage.getItem(AUTH_SESSION_KEY);
+        const localAuth = localStorage.getItem(AUTH_SESSION_KEY);
+        const isAuth = (sessionAuth === "true" || localAuth === "true");
+
+        if (isAuth) {
+          authGate.classList.add("hidden");
+          adminApp.classList.remove("hidden");
+          if (!isDataLoaded) {
+            isDataLoaded = true;
+            loadGuests();
+            loadRsvps();
+          }
+        } else {
+          adminApp.classList.add("hidden");
+          authGate.classList.remove("hidden");
+          hideAuthError();
+          if (!checkLockout()) {
+            setTimeout(() => adminPasscode.focus(), 150);
+          }
+        }
+      }
+
+      // 4. Proses Verifikasi Form Login
+      if (authForm) {
+        authForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          if (checkLockout()) return;
+
+          const entered = adminPasscode.value.trim();
+          if (!entered) {
+            showAuthError("Mohon masukkan kata sandi panitia.");
+            return;
+          }
+
+          // Cek kecocokan passcode
+          const isMatch = VALID_PASSCODES.some(p => p.toLowerCase() === entered.toLowerCase());
+
+          if (isMatch) {
+            // Berhasil
+            hideAuthError();
+            localStorage.removeItem(ATTEMPTS_KEY);
+            localStorage.removeItem(LOCKOUT_KEY);
+
+            if (rememberMe && rememberMe.checked) {
+              localStorage.setItem(AUTH_SESSION_KEY, "true");
+            } else {
+              sessionStorage.setItem(AUTH_SESSION_KEY, "true");
+            }
+
+            adminPasscode.value = "";
+            showToast("Verifikasi berhasil! Selamat datang Panitia.");
+            checkAuthStatus();
+          } else {
+            // Gagal
+            let attempts = parseInt(localStorage.getItem(ATTEMPTS_KEY) || "0", 10) + 1;
+            localStorage.setItem(ATTEMPTS_KEY, attempts.toString());
+
+            const maxAttempts = (APP_CONFIG.admin && APP_CONFIG.admin.maxAttempts) || 5;
+            if (attempts >= maxAttempts) {
+              const lockUntil = Date.now() + 60 * 1000; // Lock 60 detik
+              localStorage.setItem(LOCKOUT_KEY, lockUntil.toString());
+              localStorage.removeItem(ATTEMPTS_KEY);
+              checkLockout();
+            } else {
+              const sisa = maxAttempts - attempts;
+              showAuthError(`Kata sandi panitia tidak valid. Sisa percobaan: ${sisa} kali.`);
+              adminPasscode.select();
+            }
+          }
+        });
+      }
+
+      // 5. Tombol Keluar / Logout
+      if (btnLogout) {
+        btnLogout.addEventListener("click", () => {
+          if (confirm("Apakah Anda yakin ingin keluar dari Panel Panitia?")) {
+            sessionStorage.removeItem(AUTH_SESSION_KEY);
+            localStorage.removeItem(AUTH_SESSION_KEY);
+            isDataLoaded = false;
+            adminPasscode.value = "";
+            showToast("Anda telah keluar dari panel panitia.");
+            checkAuthStatus();
+          }
+        });
+      }
+
+      // Timer interval untuk countdown lockout
+      setInterval(() => {
+        if (!authGate.classList.contains("hidden")) {
+          checkLockout();
+        }
+      }, 1000);
+
+      // Jalankan verifikasi awal saat halaman pertama kali dibuka
+      checkAuthStatus();
+    });
+  </script>
+
+</body>
+</html>

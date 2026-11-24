@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Undangan Resmi — Edu Fair &amp; Career Expo 2026 | SMKN 6 Tangerang Selatan</title>
+  <meta name="description" content="Undangan Digital Edu Fair &amp; Career Expo 2026 SMKN 6 Tangerang Selatan. Tema: Connecting Competence to Future : Bekerja, Melanjutkan, Berwirausaha.">
+
+  <!-- Google Fonts: Playfair Display & Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+
+  <!-- Iconify CDN -->
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gold: '#C8A65A',
+            dark: '#0B0B0B',
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            sans: ['"Montserrat"', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- External Custom Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="bg-[#0B0B0B] text-white font-sans antialiased selection:bg-[#C8A65A] selection:text-[#0B0B0B] pb-20 md:pb-0 overflow-x-hidden">
+
+  <!-- ========================================================================
+       FITUR 1: COVER / SAMPUL UNDANGAN (HERO COVER FULLSCREEN)
+       - Judul Acara, Nama Sekolah, Tema
+       - Nama Tamu Dinamis via Parameter URL (?to=Nama+Tamu)
+       - Tombol Buka Undangan dengan Transisi Halus & Autoplay Musik
+       ======================================================================== -->
+  <div id="heroCover" class="fixed inset-0 z-[9999] bg-[#0B0B0B] flex flex-col justify-center items-center text-center p-6 transition-all duration-1000 ease-in-out bg-cover bg-center" style="background-image: linear-gradient(rgba(11, 11, 11, 0.88), rgba(11, 11, 11, 0.94)), url('https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2070&auto=format&fit=crop');">
+    
+    <!-- Top Badge -->
+    <div class="inline-flex items-center gap-3 mb-4">
+      <span class="w-8 h-[1px] bg-[#C8A65A]"></span>
+      <span class="text-[#C8A65A] text-xs uppercase tracking-[0.3em] font-medium">Undangan Resmi</span>
+      <span class="w-8 h-[1px] bg-[#C8A65A]"></span>
+    </div>
+
+    <!-- School Header -->
+    <p class="text-xs md:text-sm uppercase tracking-[0.25em] text-white/60 mb-2">
+      SMKN 6 Tangerang Selatan
+    </p>
+
+    <!-- Event Title -->
+    <h1 class="font-serif text-3xl sm:text-5xl md:text-6xl font-semibold text-white tracking-tight leading-tight mb-3">
+      Edu Fair &amp;<br>
+      <span class="italic text-[#C8A65A] font-normal">Career Expo</span> 2026
+    </h1>
+
+    <!-- Theme -->
+    <p class="max-w-md text-xs sm:text-sm text-white/70 italic font-light tracking-wide mb-8">
+      "Connecting Competence to Future : Bekerja, Melanjutkan, Berwirausaha"
+    </p>
+
+    <!-- Dynamic Guest Name Card -->
+    <div class="bg-[#0B0B0B]/80 border border-[#2F2F2F] backdrop-blur-md p-5 rounded-sm max-w-xs w-full mb-8 shadow-xl">
+      <span class="block text-[10px] uppercase tracking-[0.2em] text-white/50 mb-1">
+        Kepada Yth. Bapak/Ibu/Saudara/i:
+      </span>
+      <h3 id="coverGuestName" class="font-serif text-lg md:text-xl font-semibold text-[#C8A65A] tracking-wide">
+        Tamu Undangan
+      </h3>
+      <span id="coverGuestCategory" class="hidden text-[10px] uppercase font-bold tracking-widest px-2.5 py-0.5 mt-2 inline-block border border-[#C8A65A]/40 text-[#C8A65A] bg-[#C8A65A]/10 rounded-sm"></span>
+    </div>
+
+    <!-- Open Invitation Button -->
+    <button id="btnOpen" class="px-8 py-3.5 bg-[#C8A65A] text-[#0B0B0B] text-xs font-semibold uppercase tracking-[0.25em] rounded-sm hover:bg-[#b89548] transition-all duration-300 shadow-xl shadow-[#C8A65A]/15 flex items-center gap-3 group">
+      <iconify-icon icon="ph:envelope-open-fill" class="text-base transition-transform group-hover:scale-110"></iconify-icon>
+      <span>Buka Undangan</span>
+    </button>
+
+    <!-- Bottom Info -->
+    <div class="absolute bottom-8 text-[11px] uppercase tracking-[0.2em] text-white/40 flex items-center gap-2">
+      <iconify-icon icon="ph:calendar-blank-bold" class="text-[#C8A65A]"></iconify-icon>
+      <span>Rabu, 25 November 2026 &bull; 07.00 WIB s/d Selesai</span>
+    </div>
+  </div>
+
+
+  <!-- ========================================================================
+       HEADER NAVIGATION
+       ======================================================================== -->
+  <header class="fixed top-0 left-0 w-full z-50 backdrop-blur-xl bg-[#0B0B0B]/80 border-b border-[#1A1A1A] transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="#" class="font-serif text-xl sm:text-2xl tracking-[0.2em] text-[#C8A65A] font-semibold flex items-center gap-2">
+        <span>SMKN 6 TANGSEL</span>
+      </a>
+
+      <!-- Desktop Links -->
+      <nav class="hidden md:flex items-center space-x-8 text-xs tracking-[0.2em] uppercase font-medium text-white/70">
+        <a href="#utama" class="hover:text-[#C8A65A] transition-colors">Utama</a>
+        <a href="#jadwal" class="hover:text-[#C8A65A] transition-colors">Waktu &amp; Acara</a>
+        <a href="#tentang" class="hover:text-[#C8A65A] transition-colors">Tentang</a>
+        <a href="#galeri" class="hover:text-[#C8A65A] transition-colors">Galeri</a>
+        <a href="#lokasi" class="hover:text-[#C8A65A] transition-colors">Lokasi</a>
+        
+        <a href="#rsvp" class="hover:text-[#C8A65A] transition-colors">Buku Tamu</a>
+      </nav>
+
+      <!-- CTA Button -->
+      <div class="hidden md:flex items-center gap-3">
+        <a href="#rsvp" class="inline-flex items-center px-6 py-2.5 text-xs uppercase tracking-[0.2em] font-semibold bg-[#C8A65A] text-[#0B0B0B] rounded-sm hover:bg-[#b89548] transition-all duration-300">
+          Konfirmasi Kehadiran
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button id="mobileMenuBtn" class="md:hidden text-2xl text-white hover:text-[#C8A65A] transition-colors" aria-label="Buka menu navigasi">
+        <iconify-icon icon="ph:list-bold"></iconify-icon>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobileMenu" class="hidden md:hidden bg-[#0B0B0B]/95 border-b border-[#2F2F2F] px-6 py-8 space-y-4 text-xs uppercase tracking-[0.2em] text-white/80">
+      <a href="#utama" class="block py-2 border-b border-[#1A1A1A] hover:text-[#C8A65A]">Halaman Utama</a>
+      <a href="#jadwal" class="block py-2 border-b border-[#1A1A1A] hover:text-[#C8A65A]">Waktu &amp; Acara</a>
+      <a href="#tentang" class="block py-2 border-b border-[#1A1A1A] hover:text-[#C8A65A]">Tentang Acara</a>
+      <a href="#galeri" class="block py-2 border-b border-[#1A1A1A] hover:text-[#C8A65A]">Galeri Kegiatan</a>
+      <a href="#lokasi" class="block py-2 border-b border-[#1A1A1A] hover:text-[#C8A65A]">Lokasi Acara</a>
+      
+      <a href="#rsvp" class="block py-2 border-b border-[#1A1A1A] hover:text-[#C8A65A]">Konfirmasi RSVP</a>
+    </div>
+  </header>
+
+
+  <!-- ========================================================================
+       SECTION 1: HERO INNER / SECTION PERTAMA DENGAN JUDUL ACARA
+       - Direvisi untuk menampilkan judul dan tema secara megah dan fokus
+       ======================================================================== -->
+  <section id="utama" class="relative min-h-[92vh] flex flex-col justify-center items-center text-center px-6 pt-32 pb-24 bg-fixed bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2070&auto=format&fit=crop');">
+    <div class="absolute inset-0 bg-gradient-to-b from-[#0B0B0B]/90 via-[#0B0B0B]/80 to-[#0B0B0B] z-0"></div>
+
+    <div class="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
+      
+      <!-- Top Tagline -->
+      <div class="inline-flex items-center gap-3 mb-5">
+        <span class="w-10 h-[1px] bg-[#C8A65A]"></span>
+        <span class="text-[#C8A65A] text-xs md:text-sm tracking-[0.35em] uppercase font-semibold">SMKN 6 Tangerang Selatan</span>
+        <span class="w-10 h-[1px] bg-[#C8A65A]"></span>
+      </div>
+
+      <!-- Main Title -->
+      <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl font-semibold leading-[1.15] mb-6 text-white tracking-tight">
+        Edu Fair &amp;<br>
+        <span class="italic font-normal text-[#C8A65A]">Career Expo</span> 2026
+      </h1>
+
+      <!-- Subtitle & Theme -->
+      <div class="bg-[#0B0B0B]/60 border border-[#2F2F2F] backdrop-blur-md px-6 py-4 rounded-sm max-w-2xl mb-8">
+        <span class="text-[11px] uppercase tracking-[0.25em] text-[#C8A65A] font-semibold block mb-1">Tema Acara</span>
+        <p class="font-serif text-base sm:text-xl text-white font-medium italic tracking-wide">
+          "Connecting Competence to Future : Bekerja, Melanjutkan, Berwirausaha"
+        </p>
+      </div>
+
+      <!-- Date & Venue Pill -->
+      <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-xs tracking-wider text-white/80 mb-10">
+        <span class="px-4 py-2 border border-[#2F2F2F] bg-[#0B0B0B]/80 rounded-sm flex items-center gap-2">
+          <iconify-icon icon="ph:calendar-blank-fill" class="text-[#C8A65A]"></iconify-icon>
+          Rabu, 25 November 2026
+        </span>
+        <span class="px-4 py-2 border border-[#2F2F2F] bg-[#0B0B0B]/80 rounded-sm flex items-center gap-2">
+          <iconify-icon icon="ph:clock-fill" class="text-[#C8A65A]"></iconify-icon>
+          07.00 WIB s/d Selesai
+        </span>
+        <span class="px-4 py-2 border border-[#2F2F2F] bg-[#0B0B0B]/80 rounded-sm flex items-center gap-2">
+          <iconify-icon icon="ph:map-pin-fill" class="text-[#C8A65A]"></iconify-icon>
+          SMKN 6 Tangerang Selatan
+        </span>
+      </div>
+
+      <!-- Quick Action CTAs -->
+      <div class="flex flex-col sm:flex-row gap-4 items-center justify-center w-full sm:w-auto mb-16">
+        <a href="#jadwal" class="w-full sm:w-auto px-8 py-3.5 bg-[#C8A65A] text-[#0B0B0B] text-xs font-semibold uppercase tracking-[0.2em] rounded-sm hover:bg-[#b89548] transition-all duration-300 shadow-xl shadow-[#C8A65A]/10 flex items-center justify-center gap-2">
+          <iconify-icon icon="ph:calendar-check-bold" class="text-base"></iconify-icon>
+          <span>Waktu &amp; Detail Acara</span>
+        </a>
+        <a href="#rsvp" class="w-full sm:w-auto px-8 py-3.5 border border-[#2F2F2F] text-white/90 text-xs font-semibold uppercase tracking-[0.2em] rounded-sm hover:border-[#C8A65A] hover:text-[#C8A65A] transition-all duration-300 bg-[#0B0B0B]/40 backdrop-blur-sm flex items-center justify-center gap-2">
+          <iconify-icon icon="ph:check-circle-bold" class="text-base"></iconify-icon>
+          <span>Isi Konfirmasi Hadir</span>
+        </a>
+      </div>
+
+      <!-- Trust Bar -->
+      <div class="w-full pt-10 border-t border-[#1A1A1A] grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+        <div class="flex items-center justify-center gap-3 text-white/80">
+          <iconify-icon icon="ph:briefcase-bold" class="text-[#C8A65A] text-xl"></iconify-icon>
+          <span class="text-xs uppercase tracking-[0.15em] font-medium text-white/70">Bekerja (Job Fair)</span>
+        </div>
+        <div class="flex items-center justify-center gap-3 text-white/80">
+          <iconify-icon icon="ph:graduation-cap-bold" class="text-[#C8A65A] text-xl"></iconify-icon>
+          <span class="text-xs uppercase tracking-[0.15em] font-medium text-white/70">Melanjutkan (Edu Fair)</span>
+        </div>
+        <div class="flex items-center justify-center gap-3 text-white/80">
+          <iconify-icon icon="ph:lightbulb-bold" class="text-[#C8A65A] text-xl"></iconify-icon>
+          <span class="text-xs uppercase tracking-[0.15em] font-medium text-white/70">Berwirausaha (Expo)</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ========================================================================
+       FITUR 2: INFORMASI ACARA (HANYA 1 SESI: 07.00 WIB S/D SELESAI) & COUNTDOWN
+       ======================================================================== -->
+  <section id="jadwal" class="py-24 bg-[#0B0B0B] border-t border-[#1A1A1A]">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      
+      <!-- Section Label -->
+      <span class="text-[#C8A65A] text-xs uppercase tracking-[0.25em] font-medium block mb-2">Save The Date</span>
+      <h2 class="font-serif text-3xl md:text-4xl font-semibold text-white mb-4">Waktu &amp; Hitung Mundur Acara</h2>
+      <p class="text-white/60 text-xs sm:text-sm font-light max-w-md mx-auto mb-10">
+        Dengan penuh rasa hormat, kami mengundang kehadiran Bapak/Ibu/Saudara/i pada kegiatan:
+      </p>
+
+      <!-- COUNTDOWN TIMER BOX -->
+      <div id="countdown" class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-xl mx-auto mb-8">
+        <div class="bg-[#0B0B0B] border border-[#2F2F2F] hover:border-[#C8A65A] rounded-sm p-4 sm:p-5 transition-all">
+          <span id="days" class="font-serif text-3xl sm:text-4xl font-bold text-[#C8A65A] block">00</span>
+          <span class="text-[10px] uppercase tracking-[0.2em] text-white/50 font-medium">Hari</span>
+        </div>
+        <div class="bg-[#0B0B0B] border border-[#2F2F2F] hover:border-[#C8A65A] rounded-sm p-4 sm:p-5 transition-all">
+          <span id="hours" class="font-serif text-3xl sm:text-4xl font-bold text-[#C8A65A] block">00</span>
+          <span class="text-[10px] uppercase tracking-[0.2em] text-white/50 font-medium">Jam</span>
+        </div>
+        <div class="bg-[#0B0B0B] border border-[#2F2F2F] hover:border-[#C8A65A] rounded-sm p-4 sm:p-5 transition-all">
+          <span id="minutes" class="font-serif text-3xl sm:text-4xl font-bold text-[#C8A65A] block">00</span>
+          <span class="text-[10px] uppercase tracking-[0.2em] text-white/50 font-medium">Menit</span>
+        </div>
+        <div class="bg-[#0B0B0B] border border-[#2F2F2F] hover:border-[#C8A65A] rounded-sm p-4 sm:p-5 transition-all">
+          <span id="seconds" class="font-serif text-3xl sm:text-4xl font-bold text-[#C8A65A] block">00</span>
+          <span class="text-[10px] uppercase tracking-[0.2em] text-white/50 font-medium">Detik</span>
+        </div>
+      </div>
+
+      <!-- Add to Google Calendar Button -->
+      <div class="mb-14">
+        <button id="btnSaveCalendar" class="inline-flex items-center gap-2 px-6 py-3 border border-[#C8A65A] text-[#C8A65A] hover:bg-[#C8A65A] hover:text-[#0B0B0B] text-xs uppercase tracking-[0.2em] font-semibold rounded-sm transition-all duration-300">
+          <iconify-icon icon="ph:calendar-plus-bold" class="text-base"></iconify-icon>
+          <span>Simpan ke Google Calendar</span>
+        </button>
+      </div>
+
+      <!-- SATU SESI TUNGGAL ACARA (07.00 WIB S/D SELESAI) -->
+      <div class="relative bg-[#0B0B0B] border-2 border-[#C8A65A] p-8 sm:p-12 rounded-sm shadow-2xl shadow-[#C8A65A]/5 text-left max-w-2xl mx-auto">
+        <div class="absolute -top-3.5 right-6 bg-[#C8A65A] text-[#0B0B0B] text-[10px] uppercase font-bold tracking-[0.2em] px-4 py-1 rounded-sm shadow-md">
+          Agenda Lengkap
+        </div>
+
+        <span class="text-xs uppercase tracking-[0.25em] text-[#C8A65A] font-semibold block mb-2">Jadwal Penyelenggaraan</span>
+        <h3 class="font-serif text-2xl sm:text-3xl font-semibold text-white mb-6">
+          Edu Fair &amp; Career Expo 2026
+        </h3>
+
+        <div class="space-y-4 text-xs sm:text-sm text-white/80 font-light mb-8">
+          <div class="flex items-center gap-4">
+            <div class="w-8 h-8 rounded-sm bg-[#C8A65A]/10 border border-[#C8A65A]/30 flex items-center justify-center text-[#C8A65A] flex-shrink-0">
+              <iconify-icon icon="ph:calendar-blank-fill" class="text-base"></iconify-icon>
+            </div>
+            <div>
+              <span class="text-white/40 text-[11px] uppercase tracking-wider block">Hari &amp; Tanggal</span>
+              <strong class="text-white font-medium">Rabu, 25 November 2026</strong>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-4">
+            <div class="w-8 h-8 rounded-sm bg-[#C8A65A]/10 border border-[#C8A65A]/30 flex items-center justify-center text-[#C8A65A] flex-shrink-0">
+              <iconify-icon icon="ph:clock-fill" class="text-base"></iconify-icon>
+            </div>
+            <div>
+              <span class="text-white/40 text-[11px] uppercase tracking-wider block">Waktu Pelaksanaan</span>
+              <strong class="text-[#C8A65A] font-semibold">07.00 WIB sampai dengan selesai</strong>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-4">
+            <div class="w-8 h-8 rounded-sm bg-[#C8A65A]/10 border border-[#C8A65A]/30 flex items-center justify-center text-[#C8A65A] flex-shrink-0">
+              <iconify-icon icon="ph:map-pin-fill" class="text-base"></iconify-icon>
+            </div>
+            <div>
+              <span class="text-white/40 text-[11px] uppercase tracking-wider block">Tempat / Lokasi</span>
+              <strong class="text-white font-medium">SMKN 6 Tangerang Selatan</strong>
+              <span class="text-white/50 block text-xs">Jl. WR. Supratman No.1, Ciputat Timur, Kota Tangerang Selatan</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Agenda Badges -->
+        <div class="pt-6 border-t border-[#2F2F2F]">
+          <span class="text-[10px] uppercase tracking-[0.2em] text-white/50 block mb-3">Rangkaian Kegiatan:</span>
+          <div class="flex flex-wrap gap-2 text-xs">
+            <span class="px-3 py-1.5 border border-[#2F2F2F] rounded-sm bg-[#0B0B0B] text-white/70">Pembukaan &amp; Ceremonial</span>
+            <span class="px-3 py-1.5 border border-[#C8A65A] rounded-sm bg-[#C8A65A]/10 text-[#C8A65A] font-medium">Job Fair &amp; Rekrutmen</span>
+            <span class="px-3 py-1.5 border border-[#2F2F2F] rounded-sm bg-[#0B0B0B] text-white/70">Edu Fair &amp; Info Beasiswa</span>
+            <span class="px-3 py-1.5 border border-[#2F2F2F] rounded-sm bg-[#0B0B0B] text-white/70">Pameran Karya Siswa</span>
+            <span class="px-3 py-1.5 border border-[#2F2F2F] rounded-sm bg-[#0B0B0B] text-white/70">Sharing Session</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       FITUR 4: GALERI FOTO & LIGHTBOX MODAL
+       ======================================================================== -->
+  <section id="galeri" class="py-24 bg-[#0B0B0B] border-t border-[#1A1A1A]">
+    <div class="max-w-7xl mx-auto px-6 mb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+      <div>
+        <span class="text-[#C8A65A] text-xs uppercase tracking-[0.25em] font-medium block mb-2">Dokumentasi</span>
+        <h2 class="font-serif text-3xl md:text-4xl font-semibold text-white">Galeri Kegiatan</h2>
+      </div>
+      <p class="text-white/60 text-xs uppercase tracking-[0.2em]">
+        Kompetensi &bull; Karya &bull; Kolaborasi
+      </p>
+    </div>
+
+    <!-- 4 Images Grid -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 max-w-7xl mx-auto px-6">
+      <!-- Gallery Item 1 -->
+      <div class="gallery-card relative aspect-square overflow-hidden rounded-sm group border border-[#1A1A1A] bg-[#0B0B0B] cursor-pointer" data-img="https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2070&auto=format&fit=crop" data-title="Career Expo &amp; Rekrutmen Industri">
+        <img 
+          src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2070&auto=format&fit=crop" 
+          alt="Bursa Kerja Vokasi" 
+          class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+        >
+        <div class="absolute inset-0 bg-gradient-to-t from-[#0B0B0B]/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+          <span class="text-xs uppercase tracking-widest text-[#C8A65A] font-medium">Bursa Kerja Vokasi</span>
+        </div>
+      </div>
+
+      <!-- Gallery Item 2 -->
+      <div class="gallery-card relative aspect-square overflow-hidden rounded-sm group border border-[#1A1A1A] bg-[#0B0B0B] cursor-pointer" data-img="https://images.unsplash.com/photo-1515187029135-18ee286d815b?q=80&w=2070&auto=format&fit=crop" data-title="Seminar &amp; Workshop Kewirausahaan">
+        <img 
+          src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?q=80&w=2070&auto=format&fit=crop" 
+          alt="Workshop Kewirausahaan" 
+          class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+        >
+        <div class="absolute inset-0 bg-gradient-to-t from-[#0B0B0B]/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+          <span class="text-xs uppercase tracking-widest text-[#C8A65A] font-medium">Workshop Wirausaha</span>
+        </div>
+      </div>
+
+      <!-- Gallery Item 3 -->
+      <div class="gallery-card relative aspect-square overflow-hidden rounded-sm group border border-[#1A1A1A] bg-[#0B0B0B] cursor-pointer" data-img="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071&auto=format&fit=crop" data-title="Konsultasi &amp; Edu Fair Perguruan Tinggi">
+        <img 
+          src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071&auto=format&fit=crop" 
+          alt="Konsultasi Pendidikan" 
+          class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+        >
+        <div class="absolute inset-0 bg-gradient-to-t from-[#0B0B0B]/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+          <span class="text-xs uppercase tracking-widest text-[#C8A65A] font-medium">Konsultasi Kampus</span>
+        </div>
+      </div>
+
+      <!-- Gallery Item 4 -->
+      <div class="gallery-card relative aspect-square overflow-hidden rounded-sm group border border-[#1A1A1A] bg-[#0B0B0B] cursor-pointer" data-img="https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=80&w=2070&auto=format&fit=crop" data-title="Pameran Produk Teknologi &amp; Karya Siswa">
+        <img 
+          src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=80&w=2070&auto=format&fit=crop" 
+          alt="Inovasi & Teknologi SMK" 
+          class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+        >
+        <div class="absolute inset-0 bg-gradient-to-t from-[#0B0B0B]/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+          <span class="text-xs uppercase tracking-widest text-[#C8A65A] font-medium">Pameran Karya Siswa</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========================================================================
+       FITUR 3: NAVIGASI LOKASI (GOOGLE MAPS)
+       ======================================================================== -->
+  <section id="lokasi" class="py-24 bg-[#0B0B0B] border-t border-[#1A1A1A]">
+    <div class="max-w-7xl mx-auto px-6">
+      
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <span class="text-[#C8A65A] text-xs uppercase tracking-[0.25em] font-medium block mb-2">Petunjuk Arah</span>
+        <h2 class="font-serif text-3xl md:text-4xl font-semibold text-white mb-3">Lokasi Penyelenggaraan</h2>
+        <p class="text-white/60 text-xs sm:text-sm font-light">
+          Jl. Magnolia VI No. 6, Kelurahan Jelupang, Kecamatan Serpong Utara, Kota Tangerang Selatan, Banten
+
+        </p>
+      </div>
+
+      <!-- Google Maps Embed Frame -->
+      <div class="max-w-4xl mx-auto mb-8 border border-[#2F2F2F] rounded-sm overflow-hidden shadow-2xl bg-[#0B0B0B]">
+        <div class="aspect-video w-full">
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.0030725559554!2d106.66350157499117!3d-6.263324093725459!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69fb06a47e36b7%3A0x93b22c3ee1f216b1!2sSMKN%206%20Tangerang%20Selatan!5e0!3m2!1sid!2sid!4v1795505747872!5m2!1sid!2sid" 
+            width="100%" 
+            height="100%" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Peta Lokasi SMKN 6 Tangerang Selatan">
+          </iframe>
+        </div>
+      </div>
+
+      <!-- Open in Google Maps Button -->
+      <div class="text-center">
+        <a href="https://maps.google.com/?q=SMKN+6+Tangerang+Selatan" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-8 py-3.5 bg-[#C8A65A] text-[#0B0B0B] text-xs font-semibold uppercase tracking-[0.2em] rounded-sm hover:bg-[#b89548] transition-all">
+          <iconify-icon icon="ph:navigation-arrow-fill" class="text-base"></iconify-icon>
+          <span>Buka di Google Maps</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ========================================================================
+       FITUR 5: FORMULIR RSVP & BUKU TAMU PERSISTEN (LOCALSTORAGE)
+       ======================================================================== -->
+  <section id="rsvp" class="py-24 bg-[#0B0B0B] border-t border-[#1A1A1A]">
+    <div class="max-w-4xl mx-auto px-6">
+      
+      <div class="text-center max-w-xl mx-auto mb-16">
+        <span class="text-[#C8A65A] text-xs uppercase tracking-[0.25em] font-medium block mb-2">Konfirmasi Kehadiran</span>
+        <h2 class="font-serif text-3xl md:text-4xl font-semibold text-white mb-3">RSVP &amp; Buku Tamu</h2>
+        <p class="text-white/60 text-xs sm:text-sm font-light">
+          Mohon kesediaan Bapak/Ibu/Saudara/i untuk mengonfirmasi kehadiran serta menyampaikan untaian doa dan harapan terbaik:
+        </p>
+      </div>
+
+      <!-- Form RSVP -->
+      <form id="rsvpForm" class="bg-[#0B0B0B] border border-[#2F2F2F] p-6 sm:p-10 rounded-sm mb-16 space-y-6">
+        <div>
+          <label for="rsvpName" class="block text-xs uppercase tracking-[0.2em] text-[#C8A65A] font-semibold mb-2">
+            Nama Lengkap / Instansi
+          </label>
+          <input 
+            type="text" 
+            id="rsvpName" 
+            required 
+            placeholder="Masukkan nama lengkap atau perwakilan instansi..."
+            class="w-full bg-[#0B0B0B] border border-[#2F2F2F] focus:border-[#C8A65A] text-white text-sm px-4 py-3 rounded-sm outline-none transition-colors"
+          >
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div>
+            <label for="rsvpStatus" class="block text-xs uppercase tracking-[0.2em] text-[#C8A65A] font-semibold mb-2">
+              Konfirmasi Kehadiran
+            </label>
+            <select 
+              id="rsvpStatus" 
+              required
+              class="w-full bg-[#0B0B0B] border border-[#2F2F2F] focus:border-[#C8A65A] text-white text-sm px-4 py-3 rounded-sm outline-none transition-colors"
+            >
+              <option value="" disabled selected>Pilih Status...</option>
+              <option value="Hadir">Ya, Saya Akan Hadir</option>
+              <option value="Tidak Hadir">Mohon Maaf, Berhalangan Hadir</option>
+              <option value="Masih Ragu">Masih Dipertimbangkan</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="rsvpGuests" class="block text-xs uppercase tracking-[0.2em] text-[#C8A65A] font-semibold mb-2">
+              Jumlah Rombongan
+            </label>
+            <select 
+              id="rsvpGuests"
+              class="w-full bg-[#0B0B0B] border border-[#2F2F2F] focus:border-[#C8A65A] text-white text-sm px-4 py-3 rounded-sm outline-none transition-colors"
+            >
+              <option value="1 Orang">1 Orang</option>
+              <option value="2 Orang">2 Orang</option>
+              <option value="3-5 Orang">3 - 5 Orang (Delegasi)</option>
+              <option value="6+ Orang">Lebih dari 5 Orang</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label for="rsvpMessage" class="block text-xs uppercase tracking-[0.2em] text-[#C8A65A] font-semibold mb-2">
+            Ucapan, Doa &amp; Harapan
+          </label>
+          <textarea 
+            id="rsvpMessage" 
+            rows="3" 
+            required 
+            placeholder="Tuliskan ucapan sukses atau pesan kemitraan untuk Edu Fair & Career Expo 2026..."
+            class="w-full bg-[#0B0B0B] border border-[#2F2F2F] focus:border-[#C8A65A] text-white text-sm px-4 py-3 rounded-sm outline-none transition-colors"
+          ></textarea>
+        </div>
+
+        <button type="submit" class="w-full py-4 bg-[#C8A65A] text-[#0B0B0B] text-xs uppercase tracking-[0.25em] font-semibold rounded-sm hover:bg-[#b89548] transition-all flex items-center justify-center gap-2">
+          <iconify-icon icon="ph:paper-plane-tilt-fill" class="text-base"></iconify-icon>
+          <span>Kirim Konfirmasi &amp; Ucapan</span>
+        </button>
+      </form>
+
+      <!-- Daftar Ucapan & Doa Tamu -->
+      <div>
+        <div class="flex items-center justify-between pb-4 border-b border-[#1A1A1A] mb-6">
+          <h3 class="font-serif text-xl font-semibold text-white flex items-center gap-3">
+            <iconify-icon icon="ph:chats-circle-fill" class="text-[#C8A65A]"></iconify-icon>
+            <span>Buku Tamu &amp; Pesan Sinergi</span>
+          </h3>
+          <span id="wishesCount" class="text-xs uppercase tracking-wider text-white/50">0 Ucapan</span>
+        </div>
+
+        <!-- Scrollable Wishes List -->
+        <div id="wishesList" class="space-y-4 max-h-[460px] overflow-y-auto pr-2">
+          <!-- Wishes items rendered dynamically via JavaScript -->
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ========================================================================
+       FOOTER
+       ======================================================================== -->
+  <footer class="bg-[#0B0B0B] border-t border-[#1A1A1A] pt-16 pb-12 text-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
+        <!-- Col 1 -->
+        <div class="space-y-3">
+          <h4 class="font-serif text-xl text-[#C8A65A] font-semibold">SMKN 6 Tangerang Selatan</h4>
+          <p class="text-xs text-white/60 leading-relaxed font-light">
+            Sekolah Menengah Kejuruan Pusat Keunggulan yang berkomitmen mencetak insan vokasi berdaya saing global, berintegritas, dan siap kerja.
+          </p>
+        </div>
+
+        <!-- Col 2 -->
+        <div class="space-y-3">
+          <h5 class="text-xs uppercase tracking-[0.2em] text-[#C8A65A] font-semibold">Sekretariat Panitia</h5>
+          <p class="text-xs text-white/60 leading-relaxed font-light">
+            Jl. Magnolia VI No. 6, Jelupang<br>
+            Serpong Utara, Tangerang Selatan, Banten<br>
+            Email: smkn6tangsel@gmail.com
+          </p>
+        </div>
+
+        <!-- Col 3 -->
+        <div class="space-y-3">
+          <h5 class="text-xs uppercase tracking-[0.2em] text-[#C8A65A] font-semibold">Informasi Acara</h5>
+          <p class="text-xs text-white/60 leading-relaxed font-light">
+            Rabu, 25 November 2026<br>
+            Pukul 07.00 WIB s/d Selesai<br>
+            Terbuka untuk Siswa, Alumni, &amp; Tamu Undangan
+          </p>
+        </div>
+      </div>
+
+      <!-- Copyright & Admin Link -->
+      <div class="pt-8 border-t border-[#1A1A1A] flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] tracking-widest uppercase text-white/40">
+        <div>
+          &copy; 2026 PANITIA EDU FAIR &amp; CAREER EXPO &bull; SMKN 6 TANGERANG SELATAN. ALL RIGHTS RESERVED.
+        </div>
+        <div>
+          <a href="admin.html" target="_blank" class="text-white/40 hover:text-[#C8A65A] inline-flex items-center gap-1.5 transition-colors border border-[#1A1A1A] hover:border-[#C8A65A]/40 px-3 py-1.5 rounded-sm">
+            <iconify-icon icon="ph:lock-key-bold" class="text-[#C8A65A]"></iconify-icon>
+            <span>Panel Admin</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ========================================================================
+       FITUR 6: KONTROL AUDIO (FLOATING MUSIC TOGGLE)
+       ======================================================================== -->
+  <div class="fixed bottom-24 md:bottom-8 right-6 z-50 flex items-center gap-3">
+    <button 
+      id="musicToggle" 
+      class="w-12 h-12 bg-[#C8A65A] text-[#0B0B0B] rounded-sm shadow-xl flex items-center justify-center hover:scale-110 transition-transform duration-300"
+      title="Putar / Hentikan Musik Latar"
+      aria-label="Kontrol Pemutar Musik"
+    >
+      <iconify-icon id="musicIcon" icon="ph:disc-bold" class="text-2xl spinning"></iconify-icon>
+    </button>
+  </div>
+
+  <!-- Audio Element -->
+  <audio id="bgMusic" loop preload="auto">
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_1a609a6882.mp3?filename=corporate-motivational-inspiring-120961.mp3" type="audio/mp3">
+  </audio>
+
+
+  <!-- ========================================================================
+       FITUR 7: STICKY MOBILE ACTION BAR
+       ======================================================================== -->
+  <div class="fixed bottom-0 left-0 w-full z-40 md:hidden bg-[#0B0B0B]/95 backdrop-blur-xl border-t border-[#2F2F2F] px-4 py-3 flex items-center justify-between gap-3">
+    <div class="flex flex-col">
+      <span class="text-[10px] uppercase tracking-wider text-white/50">Edu Fair &amp; Career Expo</span>
+      <span class="text-xs font-semibold text-[#C8A65A]">25 Nov 2026 &bull; 07.00 WIB</span>
+    </div>
+    <a href="#rsvp" class="px-5 py-2.5 bg-[#C8A65A] text-[#0B0B0B] text-xs font-semibold uppercase tracking-[0.15em] rounded-sm">
+      Konfirmasi Hadir
+    </a>
+  </div>
+
+
+  <!-- ========================================================================
+       MODAL LIGHTBOX GALERI
+       ======================================================================== -->
+  <div id="galleryModal" class="fixed inset-0 z-[10000] bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="relative max-w-4xl w-full">
+      <button id="closeModal" class="absolute -top-10 right-0 text-white text-2xl hover:text-[#C8A65A]" aria-label="Tutup foto">
+        <iconify-icon icon="ph:x-bold"></iconify-icon>
+      </button>
+      <img id="modalImg" src="" alt="Preview Foto" class="w-full max-h-[80vh] object-contain border border-[#2F2F2F] rounded-sm">
+      <p id="modalCaption" class="text-center text-xs text-white/70 mt-3 font-light tracking-wide"></p>
+    </div>
+  </div>
+
+
+  <!-- ========================================================================
+       TOAST NOTIFIKASI
+       ======================================================================== -->
+  <div id="toast" class="fixed top-6 left-1/2 -translate-x-1/2 z-[10001] bg-[#0B0B0B] border border-[#C8A65A] text-white px-6 py-3 rounded-sm shadow-2xl text-xs tracking-wider uppercase font-medium hidden flex items-center gap-2">
+    <iconify-icon icon="ph:check-circle-fill" class="text-[#C8A65A] text-base"></iconify-icon>
+    <span id="toastMsg">Berhasil!</span>
+  </div>
+
+
+  <!-- Supabase JS Client v2 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Konfigurasi Supabase & Acara -->
+  <script src="js/config.js"></script>
+
+  <!-- External Custom JavaScript -->
+  <script src="js/script.js" defer></script>
+
+</body>
+</html>
