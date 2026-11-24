@@ -211,6 +211,24 @@ document.addEventListener("DOMContentLoaded", async () => {
   const musicIcon = document.getElementById("musicIcon");
   let isPlaying = false;
 
+  // Pastikan sumber audio menggunakan konfigurasi tema jika disetel
+  if (bgMusic && typeof APP_CONFIG !== "undefined" && APP_CONFIG.music && APP_CONFIG.music.src) {
+    if (!bgMusic.currentSrc || bgMusic.currentSrc === "") {
+      bgMusic.src = APP_CONFIG.music.src;
+    }
+    // Fallback jika sumber lokal bermasalah
+    bgMusic.addEventListener("error", () => {
+      if (APP_CONFIG.music.fallbackSrc && bgMusic.src !== APP_CONFIG.music.fallbackSrc) {
+        console.warn("Audio utama gagal dimuat, beralih ke fallback URL:", APP_CONFIG.music.fallbackSrc);
+        bgMusic.src = APP_CONFIG.music.fallbackSrc;
+        bgMusic.load();
+        if (isPlaying) {
+          bgMusic.play().catch(() => {});
+        }
+      }
+    });
+  }
+
   function playMusic() {
     if (!bgMusic) return;
     bgMusic.play().then(() => {
@@ -362,127 +380,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
   // --------------------------------------------------------------------------
-  // 8. RSVP & BUKU TAMU PERSISTEN (SUPABASE CLOUD + LOCALSTORAGE FALLBACK)
+  // 8. RSVP & FORMULIR KONFIRMASI KEHADIRAN (STANDALONE / TANPA TAMPILAN PESAN)
   // --------------------------------------------------------------------------
   const rsvpForm = document.getElementById("rsvpForm");
-  const wishesList = document.getElementById("wishesList");
-  const wishesCount = document.getElementById("wishesCount");
   const STORAGE_KEY = "edufair_tangsel_rsvp_2026";
 
-  const defaultWishes = [
-    {
-      name: "Dr. Ir. Hendra Gunawan (Mitra Industri)",
-      status: "Hadir",
-      guests: "3-5 Orang",
-      message: "Kami dari asosiasi industri siap hadir dan membuka kesempatan rekrutmen magang serta kerja bagi lulusan berprestasi SMKN 6 Tangsel!",
-      date: "Kemarin"
-    },
-    {
-      name: "Universitas Multimedia Nusantara",
-      status: "Hadir",
-      guests: "2 Orang",
-      message: "Booth universitas kami siap memberikan informasi beasiswa dan program jalur prestasi untuk siswa SMKN 6 Tangsel.",
-      date: "2 hari yang lalu"
-    },
-    {
-      name: "Alumni Wirausaha SMKN 6",
-      status: "Hadir",
-      guests: "1 Orang",
-      message: "Bangga melihat kemajuan almamater tercinta. Sukses besar untuk pameran karya dan expo tahun ini!",
-      date: "3 hari yang lalu"
-    }
-  ];
-
-  async function fetchWishes() {
-    // 1. Ambil dari Supabase jika aktif
-    if (isSupabaseActive) {
-      try {
-        const { data, error } = await supabaseClient
-          .from(APP_CONFIG.supabase.tables.rsvps)
-          .select("*")
-          .order("created_at", { ascending: false });
-
-        if (!error && data && data.length > 0) {
-          return data.map(item => ({
-            name: item.guest_name,
-            status: item.status,
-            guests: item.guest_count,
-            message: item.message,
-            date: item.created_at ? formatTimeAgo(new Date(item.created_at)) : "Baru saja"
-          }));
-        }
-      } catch (err) {
-        console.warn("Gagal mengambil data dari Supabase, beralih ke localStorage:", err);
-      }
-    }
-
-    // 2. Fallback ke LocalStorage
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (!stored) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultWishes));
-      return defaultWishes;
-    }
-    try {
-      return JSON.parse(stored);
-    } catch {
-      return defaultWishes;
-    }
-  }
-
-  function formatTimeAgo(date) {
-    try {
-      return date.toLocaleDateString("id-ID", {
-        day: "numeric",
-        month: "short",
-        hour: "2-digit",
-        minute: "2-digit"
-      });
-    } catch {
-      return "Baru saja";
-    }
-  }
-
-  function escapeHtml(str) {
-    return String(str)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-  }
-
-  async function renderWishes() {
-    if (!wishesList) return;
-    const wishes = await fetchWishes();
-    if (wishesCount) wishesCount.textContent = `${wishes.length} Ucapan`;
-
-    wishesList.innerHTML = wishes.map(w => {
-      const badgeClass = w.status === "Hadir" 
-        ? "border-emerald-500/40 text-emerald-400 bg-emerald-500/10" 
-        : w.status === "Tidak Hadir" 
-        ? "border-red-500/40 text-red-400 bg-red-500/10" 
-        : "border-yellow-500/40 text-yellow-400 bg-yellow-500/10";
-
-      return `
-        <div class="p-5 bg-[#0B0B0B] border border-[#2F2F2F] rounded-sm transition-all hover:border-[#C8A65A]/50">
-          <div class="flex items-center justify-between mb-2">
-            <span class="font-serif font-semibold text-white text-sm tracking-wide">${escapeHtml(w.name)}</span>
-            <span class="text-[10px] uppercase font-bold tracking-widest px-2.5 py-0.5 border rounded-sm ${badgeClass}">
-              ${escapeHtml(w.status)}
-            </span>
-          </div>
-          <div class="text-[11px] text-white/40 mb-3 flex items-center gap-3">
-            <span><iconify-icon icon="ph:users-bold" class="text-[#C8A65A]"></iconify-icon> ${escapeHtml(w.guests || '1 Orang')}</span>
-            <span>&bull;</span>
-            <span>${escapeHtml(w.date || 'Baru Saja')}</span>
-          </div>
-          <p class="text-xs text-white/70 leading-relaxed font-light">
-            ${escapeHtml(w.message)}
-          </p>
-        </div>
-      `;
-    }).join("");
-  }
+  // Bersihkan data lama jika ada di localStorage agar tidak menampilkan apa-apa
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (e) {}
 
   if (rsvpForm) {
     rsvpForm.addEventListener("submit", async (e) => {
@@ -504,18 +410,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         submitBtn.innerHTML = `<iconify-icon icon="ph:spinner-bold" class="animate-spin text-base"></iconify-icon> <span>Mengirim...</span>`;
       }
 
-      const newWish = {
-        name,
-        status,
-        guests,
-        message,
-        date: "Baru saja"
-      };
-
-      // Simpan ke Supabase jika aktif
+      // Opsional simpan ke database untuk pencatatan internal panitia jika Supabase aktif
       if (isSupabaseActive) {
         try {
-          const { data, error } = await supabaseClient
+          await supabaseClient
             .from(APP_CONFIG.supabase.tables.rsvps)
             .insert([{
               guest_name: name,
@@ -523,25 +421,12 @@ document.addEventListener("DOMContentLoaded", async () => {
               guest_count: guests,
               message: message,
             }]);
-          if (error) {
-            console.error("Gagal simpan ke Supabase rsvps (cek permission/RLS):", error);
-          } else {
-            console.log("Data konfirmasi berhasil disimpan langsung ke tabel Supabase rsvps!");
-          }
         } catch (err) {
-          console.warn("Gagal simpan ke Supabase:", err);
+          console.warn("Penyimpanan RSVP internal selesai:", err);
         }
       }
 
-      // Selalu simpan ke LocalStorage sebagai cadangan
-      try {
-        const localList = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-        localList.unshift(newWish);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(localList));
-      } catch (e) {}
-
-      await renderWishes();
-
+      // Reset input form
       document.getElementById("rsvpMessage").value = "";
       if (submitBtn) {
         submitBtn.disabled = false;
@@ -550,24 +435,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       showToast("Konfirmasi kehadiran berhasil dikirim!");
     });
   }
-
-  // Realtime subscription untuk Supabase jika terhubung
-  if (isSupabaseActive) {
-    try {
-      supabaseClient
-        .channel("public:rsvps")
-        .on(
-          "postgres_changes",
-          { event: "INSERT", schema: "public", table: APP_CONFIG.supabase.tables.rsvps },
-          () => {
-            renderWishes();
-          }
-        )
-        .subscribe();
-    } catch (e) {}
-  }
-
-  await renderWishes();
 
 
   // --------------------------------------------------------------------------

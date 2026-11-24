@@ -24,11 +24,13 @@ const APP_CONFIG = {
   },
 
   // --------------------------------------------------------------------------
-  // 2. KUSTOMISASI MUSIK
+  // 2. KUSTOMISASI MUSIK (AUDIO SESUAI TEMA EDU FAIR & CAREER EXPO 2026)
   // --------------------------------------------------------------------------
   music: {
     autoplay: true,
-    src: "https://cdn.pixabay.com/download/audio/2022/03/15/audio_1a609a6882.mp3?filename=corporate-motivational-inspiring-120961.mp3",
+    // Musik tema: Corporate Motivational & Uplifting Instrumental (Elegan & Inspiratif)
+    src: "audio/corporate-motivational.mp3",
+    fallbackSrc: "https://archive.org/download/jamendo-638441/01-2326347-Megis-Corporate%20Motivational%20Music%202.mp3",
   },
 
   // --------------------------------------------------------------------------

@@ -814,7 +814,7 @@ SMKN 6 Tangerang Selatan`;
               .order("created_at", { ascending: false });
 
             if (!error && data && data.length > 0) {
-              loaded = data;
+              loaded = data.filter(item => item.guest_name && item.guest_name.trim().toLowerCase() !== "test");
             }
           } catch (e) {}
         }
@@ -823,7 +823,10 @@ SMKN 6 Tangerang Selatan`;
         if (loaded.length === 0) {
           try {
             const local = JSON.parse(localStorage.getItem("edufair_tangsel_rsvp_2026") || "[]");
-            loaded = local.map((item, idx) => ({
+            loaded = local.filter(item => {
+              const name = item.name || item.guest_name || "";
+              return name && name.trim().toLowerCase() !== "test";
+            }).map((item, idx) => ({
               id: item.id || `local-${idx}`,
               guest_name: item.name || item.guest_name,
               status: item.status,
